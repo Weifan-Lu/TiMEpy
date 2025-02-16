@@ -1,6 +1,6 @@
 # TMEpy
 
-This package provides tools for data visualization and analysis. Before using it, please ensure your environment is set up with the necessary dependencies.
+This package provides tools for analyzing Tidal Modulation of slow and fast Earthquakes.
 
 ## Requirements
 
