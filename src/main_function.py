@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.optimize import minimize
 import visualization as vis
+import matplotlib.pyplot as plt
 
 
 def load_txt_data(filename):
@@ -298,6 +299,145 @@ def calculate_fast_tidal_phase(ttide_cut, Stress_cut, t_ref):
     return ephase, maxtime, mintime1, mintime2, stress_at_t, stress_rate_at_t
 
 
+def fit_periodic_function(phi_degs, prob):
+    """
+    用最小二乘法拟合 R(φ) = a*cos(φ - φ0)
+    其中 φ, φ0 均是度数，最终得到:
+      - amplitude = a
+      - phase_shift = φ0 (度)
+      - model_func(φ) 可返回拟合后的 R(φ)
+    参数:
+      phi_degs : ndarray, 角度 (度)，形如 [0, 10, 20, ...]
+      prob     : ndarray, 对应角度的观测值 (例如概率密度)
+    返回:
+      amplitude, phase_shift, model_func
+    """
+    # 1. 设计矩阵 G = [cos(φ), sin(φ)]
+    G = np.column_stack((
+        np.cos(np.deg2rad(phi_degs)),
+        np.sin(np.deg2rad(phi_degs))
+    ))
+
+    # 2. 最小二乘求解 [A, B]
+    #   R(φ) ~ A*cos(φ) + B*sin(φ)
+    p, residuals, rank, s = np.linalg.lstsq(G, prob, rcond=None)
+    A, B = p
+
+    # 3. 转为复数 c = A - iB，便于同时求幅度和相位
+    c = A - B*1j
+    amplitude = np.abs(c)
+    # 与 MATLAB 里: ph_shift = -angle(c, deg=True) 对齐
+    phase_shift = -np.angle(c, deg=True)
+
+    # 4. 构造预测函数
+    def model_func(phi):
+        # 输入 phi (度)，输出拟合的 R(φ)
+        phi_rad = np.deg2rad(phi)
+        return A*np.cos(phi_rad) + B*np.sin(phi_rad)
+
+    return amplitude, phase_shift, model_func
+
+#
+#
+# def modulation_phase(data, bin, PhStress, plot_option=None):
+#     """
+#     对应 MATLAB 的 ModulationPhase 函数
+#
+#     输入:
+#       data     : 相位数据（单位：度）
+#       bin      : 直方图分箱的中心值（与 MATLAB 中 hist 的第二个参数一致，要求均匀分布）
+#       PhStress : 参考相位数据（单位：度）
+#       gy       : 绘图选项，例如 'yes2' 或 'yes1'（可选）
+#
+#     输出:
+#       PM_ra   : 归一化调制幅值
+#       ph_shift: 相位偏移（度）
+#       Po      : 均匀分布概率密度（每箱）
+#       prob_1  : 原始直方图缩放后的值
+#     """
+#     data = np.asarray(data)
+#     bin = np.asarray(bin)
+#     PhStress = np.asarray(PhStress)
+#
+#     # MATLAB: Nnum = length(data);
+#     Nnum = len(data)  # 虽然 MATLAB 中未在后续用到，但这里也计算一下
+#
+#     # MATLAB: [cout,ph1] = hist(data,bin);
+#     # 为了与 MATLAB 的 hist 保持一致，我们需根据给定的 bin（箱中心）构造箱边界：
+#     if len(bin) < 2:
+#         raise ValueError("bin 数组至少需要包含两个元素以计算箱宽。")
+#     bin_edges = np.empty(len(bin) + 1)
+#     bin_edges[1:-1] = (bin[:-1] + bin[1:]) / 2
+#     bin_edges[0] = bin[0] - (bin[1] - bin[0]) / 2
+#     bin_edges[-1] = bin[-1] + (bin[-1] - bin[-2]) / 2
+#     counts, _ = np.histogram(data, bins=bin_edges)
+#     ph1 = bin.copy()  # 与 MATLAB 输出一致，ph1 就是 bin
+#
+#     # MATLAB: wbin = unique(diff(bin));
+#     diffs = np.diff(bin)
+#     unique_diffs = np.unique(diffs)
+#     if unique_diffs.size == 1:
+#         wbin = unique_diffs[0]
+#     else:
+#         raise ValueError("分箱中心的间距不均匀，不支持。")
+#
+#     # MATLAB: Prob_o = cout/length(data)/wbin;
+#     Prob_o = counts / (len(data) * wbin)
+#
+#     # MATLAB: [cout2,~] = hist(PhStress,bin);
+#     counts2, _ = np.histogram(PhStress, bins=bin_edges)
+#
+#     # MATLAB: Po = cout2/length(PhStress)/wbin;  % probability density
+#     Po = counts2 / (len(PhStress) * wbin)
+#
+#     # MATLAB: G = [cosd(ph1)' sind(ph1)'];
+#     G = np.column_stack((np.cos(np.deg2rad(ph1)), np.sin(np.deg2rad(ph1))))
+#
+#     # MATLAB: Prob = Prob_o./Po - 1;
+#     Prob = Prob_o / Po - 1
+#
+#     # MATLAB: p = G(2:end-1,:)\Prob(2:end-1)';
+#     if len(ph1) > 2:
+#         G_sub = G[1:-1, :]  # MATLAB 中 2:end-1 对应 Python 的 1:-1
+#         Prob_sub = Prob[1:-1]
+#         p, _, _, _ = np.linalg.lstsq(G_sub, Prob_sub, rcond=None)
+#     else:
+#         p = np.zeros(2)
+#
+#     # MATLAB: c = p(1) - p(2)*sqrt(-1);
+#     c = p[0] - p[1] * 1j
+#
+#     # MATLAB: Pm = abs(c);
+#     Pm = np.abs(c)
+#
+#     # MATLAB: ph_shift = angle(c)*180/pi; ph_shift = -1*ph_shift;
+#     ph_shift = -np.angle(c, deg=True)
+#
+#     # MATLAB: PM_ra = Pm/1;
+#     PM_ra = Pm
+#
+#     # MATLAB: prob_1 = cout/(length(data)/length(cout));
+#     prob_1 = counts / (len(data) / len(counts))
+#
+#     print(Prob,bin_edges)
+#     phi_degs = (bin_edges[:-1] + bin_edges[1:]) / 2
+#     a_fit, phi0_fit, model = fit_periodic_function(phi_degs ,Prob)
+#     print(f"Fitted amplitude = {a_fit:.3f}")
+#     print(f"Fitted phase_shift = {phi0_fit:.3f} deg")
+#     print(f"Fitted amplitude = {PM_ra:.3f}")
+#     print(f"Fitted phase_shift = {ph_shift:.3f} deg")
+#     phi_dense = np.linspace(-180, 180, 30)
+#
+#
+#     if plot_option is not None and plot_option.lower() == 'yes1':
+#         vis.plot_phase_modulation(ph1, Prob_o, Po, G, p, wbin, PM_ra, ph_shift)
+#     if plot_option is not None and plot_option.lower() == 'yes2':
+#         vis.plot_phase_modulation_syn(ph1, Prob_o, Po, G, p, wbin, PM_ra, ph_shift,model,phi_dense)
+#
+#     return PM_ra, ph_shift, Po, prob_1
+
+
+
 def modulation_phase(data, bin, PhStress, plot_option=None):
     """
     对应 MATLAB 的 ModulationPhase 函数
@@ -318,8 +458,6 @@ def modulation_phase(data, bin, PhStress, plot_option=None):
     bin = np.asarray(bin)
     PhStress = np.asarray(PhStress)
 
-    # MATLAB: Nnum = length(data);
-    Nnum = len(data)  # 虽然 MATLAB 中未在后续用到，但这里也计算一下
 
     # MATLAB: [cout,ph1] = hist(data,bin);
     # 为了与 MATLAB 的 hist 保持一致，我们需根据给定的 bin（箱中心）构造箱边界：
@@ -329,7 +467,7 @@ def modulation_phase(data, bin, PhStress, plot_option=None):
     bin_edges[1:-1] = (bin[:-1] + bin[1:]) / 2
     bin_edges[0] = bin[0] - (bin[1] - bin[0]) / 2
     bin_edges[-1] = bin[-1] + (bin[-1] - bin[-2]) / 2
-    counts, _ = np.histogram(data, bins=bin_edges)
+    counts, cc1 = np.histogram(data, bins=bin_edges)
     ph1 = bin.copy()  # 与 MATLAB 输出一致，ph1 就是 bin
 
     # MATLAB: wbin = unique(diff(bin));
@@ -355,33 +493,23 @@ def modulation_phase(data, bin, PhStress, plot_option=None):
     # MATLAB: Prob = Prob_o./Po - 1;
     Prob = Prob_o / Po - 1
 
-    # MATLAB: p = G(2:end-1,:)\Prob(2:end-1)';
-    if len(ph1) > 2:
-        G_sub = G[1:-1, :]  # MATLAB 中 2:end-1 对应 Python 的 1:-1
-        Prob_sub = Prob[1:-1]
-        p, _, _, _ = np.linalg.lstsq(G_sub, Prob_sub, rcond=None)
-    else:
-        p = np.zeros(2)
+    phi_degs = (bin_edges[:-1] + bin_edges[1:]) / 2
+    print(Prob, phi_degs )
+    print(len(bin_edges),len(phi_degs))
+    a_fit, phi0_fit, model = fit_periodic_function(phi_degs ,Prob)
+    print(f"Fitted amplitude = {a_fit:.3f}")
+    print(f"Fitted phase_shift = {phi0_fit:.3f} deg")
+    phi_dense = np.linspace(-180, 180, 30)
+    ph_shift  = phi0_fit
+    PM_ra = a_fit
 
-    # MATLAB: c = p(1) - p(2)*sqrt(-1);
-    c = p[0] - p[1] * 1j
+    if plot_option is not None and plot_option.lower() == 'yes1':
+        # vis.plot_phase_modulation(ph1, Prob_o, Po, G, p, wbin, PM_ra, ph_shift)
+        vis.plot_phase_modulation(ph1, Prob_o, Po, wbin, PM_ra, ph_shift,model,phi_dense)
 
-    # MATLAB: Pm = abs(c);
-    Pm = np.abs(c)
+    return PM_ra, ph_shift, Po, Prob
 
-    # MATLAB: ph_shift = angle(c)*180/pi; ph_shift = -1*ph_shift;
-    ph_shift = -np.angle(c, deg=True)
 
-    # MATLAB: PM_ra = Pm/1;
-    PM_ra = Pm
-
-    # MATLAB: prob_1 = cout/(length(data)/length(cout));
-    prob_1 = counts / (len(data) / len(counts))
-
-    if plot_option is not None and plot_option.lower() == 'yes3':
-        vis.plot_phase_modulation(ph1, Prob_o, Po, G, p, wbin, PM_ra, ph_shift)
-
-    return PM_ra, ph_shift, Po, prob_1
 
 
 def modulation_stress(Stress_AM_bk, Stress_AM, initial_guess, plot_option):
@@ -535,6 +663,7 @@ def modulation_stress(Stress_AM_bk, Stress_AM, initial_guess, plot_option):
             Stress_AM_bk, Stress_AM, shear_stress, shear_stress_kPa,
             event_rate, a_estimated, C_estimated, delta_a, delta_c
         )
+
         # 注意：这里不调用 plt.show()，由外部统一管理
 
     return a_estimated, C_estimated, delta_a, delta_c, Stress_AM_bk, Stress_AM, shear_stress, shear_stress_kPa, event_rate
@@ -566,3 +695,88 @@ def schuster_test(pha):
     # 计算 p-value
     p_value = np.exp(-Z)
     return p_value
+
+
+
+def grid_modulation_results_2D(Allpha_obs, Allpha_ref, bin_phase, initial_guess, grid_spacing, threshold):
+    """
+    Performs 2D gridding of the data where each grid cell has a fixed size of grid_spacing degrees.
+
+    Parameters:
+        Allpha_obs (ndarray): Observation data with columns representing [?, phase, stress, ..., lat, lon, ...].
+                             Assumes that:
+                             - Column 2 (index 1) is phase.
+                             - Column 3 (index 2) is stress.
+                             - Column 11 (index 10) is latitude.
+                             - Column 12 (index 11) is longitude.
+        Allpha_ref (ndarray): Reference data with similar formatting. Uses:
+                             - Column 2 (index 1) for phase.
+                             - Column 3 (index 2) for stress.
+        bin_phase: Parameter for the ModulationPhase function.
+        initial_guess: Initial guess for the ModulationStress function.
+        grid_spacing (float): Grid size in degrees (e.g., 0.2).
+        threshold (int): Minimum number of samples required in a grid cell to perform calculations.
+
+    Returns:
+        grid_centers (ndarray): An array of shape (n, 7) where each row contains:
+            [lon_center, lat_center, a_val, p_val, pm_val, pm_pha, number_eq]
+    """
+    # Extract longitude and latitude from observation data
+    # Note: Adjust indices to match your data structure (MATLAB columns 12 and 11 correspond to Python indices 11 and 10)
+    lon = Allpha_obs[:, 11]
+    lat = Allpha_obs[:, 10]
+
+    # Define grid edges in longitude and latitude directions
+    lon_edges = np.arange(np.floor(np.min(lon)), np.ceil(np.max(lon)) + grid_spacing, grid_spacing)
+    lat_edges = np.arange(np.floor(np.min(lat)), np.ceil(np.max(lat)) + grid_spacing, grid_spacing)
+
+    # Calculate grid centers
+    lon_centers = (lon_edges[:-1] + lon_edges[1:]) / 2
+    lat_centers = (lat_edges[:-1] + lat_edges[1:]) / 2
+
+    # Determine the number of grid cells in each direction
+    num_bins_lon = len(lon_centers)
+    num_bins_lat = len(lat_centers)
+
+    # List to collect grid center results; each row: [lon, lat, a, p, pm, pm_pha, count]
+    grid_centers_vol = []
+
+    # Loop over grid cells (lon index first, then lat index)
+    for i in range(num_bins_lon):
+        for j in range(num_bins_lat):
+            # Identify the samples within the current grid cell
+            idx = ((lon >= lon_edges[i]) & (lon < lon_edges[i + 1]) &
+                   (lat >= lat_edges[j]) & (lat < lat_edges[j + 1]))
+            count = np.sum(idx)
+
+            # Skip grid cells with insufficient samples
+            if count < threshold:
+                continue
+
+            # Extract phase and stress data from the observation data.
+            # In MATLAB, column 2 is phase and column 3 is stress.
+            phase_obs = Allpha_obs[idx, 1]
+            stress_obs = Allpha_obs[idx, 2]
+
+            # Calculate modulation parameters.
+            # Convert phases from radians to degrees.
+            # Note: The string 'no' is passed as an option (presumably to suppress plotting or messages).
+
+            pm_val, pm_pha, _, _ = modulation_phase(phase_obs * 180 / np.pi,bin_phase,Allpha_ref[:, 1] * 180 / np.pi, 'no')
+
+            # Calculate stress modulation parameter 'a'
+            a_val,_, _,_,_, _,_ ,_, _ = modulation_stress(Allpha_ref[:, 2], stress_obs, initial_guess, 'no')
+
+            # Calculate p-value using the Schuster Test
+            p_val = schuster_test(phase_obs)
+
+            # Determine the grid cell center coordinates
+            lon_center = lon_centers[i]
+            lat_center = lat_centers[j]
+
+            # Append the results to the list
+            grid_centers_vol.append([lon_center, lat_center, a_val, p_val, pm_val, pm_pha, count])
+
+    # Convert the result to a NumPy array and return
+    grid_centers = np.array(grid_centers_vol)
+    return grid_centers

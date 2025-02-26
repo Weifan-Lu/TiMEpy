@@ -7,20 +7,21 @@ import main_declustering_nna as mdnna
 
 def pre2_decluster_NNA(config):
     """
-    从 params（例如 input_params）中读取参数与数据文件，
-    提取年、月、日、时、分、秒、经纬度、深度、震级，
-    并将时间转换为数值型日期（单位：天）。
+        Read parameters and data files from params (e.g., input_params),
+        extract year, month, day, hour, minute, second, latitude, longitude, depth, and magnitude,
+        and convert time to numerical dates (unit: days).
 
-    参数:
-      params: dict 类型，需包含如下键：
-            - 'start_time': 开始时间（数值或其他标识，可用于后续计算）
-            - 'data_select': 数据文件路径（文本格式，每行包含 10 列数据，
-                             顺序为 [year, month, day, hour, minute, sec, lat, lon, dep, mag]）
-            - 'df', 'b', 'p', 'q', 'eta0': 算法参数
-    返回:
-      无返回值（函数内绘图并将去相关目录保存到文件）
-    """
-    # 读取参数
+        Parameters:
+          config: A dictionary containing the following keys:
+                - 'start_time': Start time (numeric or another identifier for calculations)
+                - 'data_select': Path to the data file (text format, each row contains 10 columns:
+                                 [year, month, day, hour, minute, sec, lat, lon, dep, mag])
+                - 'df', 'b', 'p', 'q', 'eta0': Algorithm parameters
+
+        Returns:
+          None (The function generates plots and saves the declustered catalog to a file.)
+        """
+    # Read parameters
     start_time = config.start_time
     data_file = config.data_select
     df = config.df
@@ -29,17 +30,18 @@ def pre2_decluster_NNA(config):
     q = config.q
     eta0 = config.eta0
 
-    # 载入数据（假定为文本格式，每行 10 列）
+    # Load data (assumed to be in text format with 10 columns per row)
     data = np.loadtxt(data_file)
     results = mdnna.decluster_nna(start_time, data, df, b, p, q, eta0)
     Declustered_Catalog = results['Declustered_Catalog']
     Dataobj = results['Dataobj']
     t = results['t']
+    np.save(config.data_select_decluster_dataobj, Dataobj)
 
-    # ======== 将去相关目录输出到文件 ============
+    # ======== Save the declustered catalog to a file ============
     output_filename = config.data_select_decluster
     with open(output_filename, 'w') as fid:
-        # 格式为：'%d %02d %02d %02d %02d %05.2f %f %f %04.2f %04.2f %d\n'
+        # Format: '%d %02d %02d %02d %02d %05.2f %f %f %04.2f %04.2f %d\n'
         for i in range(Declustered_Catalog.shape[0]):
             yr = int(round(Declustered_Catalog[i, 0]))
             mon = int(round(Declustered_Catalog[i, 1]))
@@ -58,40 +60,41 @@ def pre2_decluster_NNA(config):
 
 
 
-    # ----------------- 控制参数变量定义 -----------------
-    # Figure 尺寸
+    # ----------------- Define control parameter variables -----------------
+    # Figure size
     FIG3_SIZE = (8, 6)
     FIG5_SIZE = (6, 6)
     FIG4_SIZE = (6, 6)
 
-    # 通用样式
-    MARKER_SIZE = 4              # 点图标记大小（Figure 3）
-    TICK_LABEL_SIZE = 12        # 坐标轴刻度标签大小（Figure 3、Figure 4）
-    TICK_LABEL_SIZE_FIG5 = 12    # 坐标轴刻度标签大小（Figure 5）
-    AXIS_LABEL_SIZE = 12         # 坐标轴标签字体大小（Figure 4）
-    TITLE_FONT_SIZE = 18         # 标题字体大小（Figure 4）
-    LEGEND_FONT_SIZE = 14        # 图例字体大小（Figure 4）
+    # General styles
+    MARKER_SIZE = 4  # Marker size for scatter plots (Figure 3)
+    TICK_LABEL_SIZE = 12  # Tick label font size (Figure 3, Figure 4)
+    TICK_LABEL_SIZE_FIG5 = 12  # Tick label font size (Figure 5)
+    AXIS_LABEL_SIZE = 12  # Axis label font size (Figure 4)
+    TITLE_FONT_SIZE = 18  # Title font size (Figure 4)
+    LEGEND_FONT_SIZE = 14  # Legend font size (Figure 4)
     nFontsize = 16
 
-    # Figure 4 专用
-    LINE_WIDTH_CUMULATIVE = 1.5  # 累积曲线线宽（Figure 4）
-    MARKER_SIZE_CUMULATIVE = 2   # 累积曲线标记大小（Figure 4）
+    # Figure 4 specific
+    LINE_WIDTH_CUMULATIVE = 1.5  # Line width for cumulative curves (Figure 4)
+    MARKER_SIZE_CUMULATIVE = 2  # Marker size for cumulative curves (Figure 4)
 
-    # Figure 5 专用
-    BIN_WIDTH = 0.1              # 二维直方图的 bin 宽度
-    LINE_WIDTH_LINE = 1          # 直线宽度（Figure 5）
+    # Figure 5 specific
+    BIN_WIDTH = 0.1  # Bin width for 2D histogram
+    LINE_WIDTH_LINE = 1  # Line width (Figure 5)
 
-    # ----------------- 绘制图形代码 -----------------
+    # ----------------- Plotting Code -----------------
 
-    # ----- Figure 3: 原始数据与去相关目录的纬度随时间变化 -----
+    # ----- Figure 3: Latitude variation over time for raw data and declustered catalog -----
     fig3, (ax1, ax2) = plt.subplots(2, 1, figsize=FIG3_SIZE)
     ax1.plot(t, data[:, 6], '.', markersize=MARKER_SIZE)
-    ax1.set_ylabel('Latitude',fontsize=nFontsize)
+    ax1.set_ylabel('Latitude', fontsize=nFontsize)
     ax1.xaxis_date()
     fig3.autofmt_xdate()
     ax1.tick_params(labelsize=TICK_LABEL_SIZE)
 
-    # 根据去相关目录前 6 列重构时间
+
+    # Reconstruct time from the first 6 columns of the declustered catalog
     years_out   = Declustered_Catalog[:, 0].astype(int)
     months_out  = Declustered_Catalog[:, 1].astype(int)
     days_out    = Declustered_Catalog[:, 2].astype(int)
@@ -112,12 +115,12 @@ def pre2_decluster_NNA(config):
     fig3.tight_layout()
     fig3.savefig(config.decluster_data_fig_lat, dpi=300)
 
-    # ----- Figure 5: 二维直方图及平滑图像 -----
+    # ----- Figure 5: 2D histogram and smoothed image -----
     num_bins = int(round(10 / BIN_WIDTH))
     X = Dataobj[:, 0]
     Y = Dataobj[:, 1]
     A = np.zeros((num_bins, num_bins))
-    # 计算每个网格中事件数
+    # Count the number of events in each grid cell
     for i in range(num_bins):
         for j in range(num_bins):
             x_min = -9 - BIN_WIDTH + BIN_WIDTH * (i + 1)
@@ -132,14 +135,14 @@ def pre2_decluster_NNA(config):
     im = ax.imshow(A, extent=(x_extent[0], x_extent[1], y_extent[0], y_extent[1]),
                    origin='lower', cmap='jet')
     plt.colorbar(im, ax=ax)
-    # 平滑处理
+    # Smoothing
     Nr, Nc = 4, 4
     matrixOut = mdnna.smooth2a(A, Nr, Nc)
     ax.imshow(matrixOut, extent=(x_extent[0], x_extent[1], y_extent[0], y_extent[1]),
               origin='lower', cmap='jet')
     ax.set_xlim([-7, -1])
     ax.set_ylim([-5, 3])
-    # 绘制绿色直线：T + R = constant，即 R = eta0 - T
+    # Draw green line: T + R = constant, i.e., R = eta0 - T
     T_line = np.arange(-10, 3, 1)
     R_line = eta0 - T_line
     ax.plot(T_line, R_line, color='white', linewidth=LINE_WIDTH_LINE)
@@ -155,9 +158,9 @@ def pre2_decluster_NNA(config):
     ax.tick_params(labelsize=TICK_LABEL_SIZE_FIG5)
     # fig5.tight_layout()
     fig5.savefig(config.decluster_data_fig_nna, dpi=300)
+    # ----- Figure 4: Cumulative Number of Earthquakes Over Time -----
 
-    # ----- Figure 4: 累积地震次数随时间变化 -----
-    # 原始目录
+    # Original catalog
     t_orig_list = []
     len_data = data.shape[0]
     for i in range(len_data):
@@ -166,10 +169,12 @@ def pre2_decluster_NNA(config):
     t_orig = mdates.date2num(t_orig_list)
     num_eq = np.arange(1, len(t_orig) + 1)
     num_eq_normalized = num_eq / num_eq[-1]
+
     fig4, ax4 = plt.subplots(figsize=FIG4_SIZE)
     ax4.plot(t_orig, num_eq_normalized, '-o', linewidth=LINE_WIDTH_CUMULATIVE, markersize=MARKER_SIZE_CUMULATIVE,
              color='black', label='Original Catalog')
-    # 去相关目录
+
+    # Declustered catalog
     t_decl_list = []
     for i in range(Declustered_Catalog.shape[0]):
         t_decl_list.append(datetime(int(Declustered_Catalog[i, 0]), int(Declustered_Catalog[i, 1]),
@@ -178,8 +183,10 @@ def pre2_decluster_NNA(config):
     t_decl = mdates.date2num(t_decl_list)
     num_eq_decl = np.arange(1, len(t_decl) + 1)
     num_eq_decl_normalized = num_eq_decl / num_eq_decl[-1] if len(num_eq_decl) > 0 else num_eq_decl
+
     ax4.plot(t_decl, num_eq_decl_normalized, '-o', linewidth=LINE_WIDTH_CUMULATIVE, markersize=MARKER_SIZE_CUMULATIVE,
              color='red', label='Declustered Catalog')
+
     ax4.set_xlabel('Time', fontsize=nFontsize)
     ax4.set_ylabel('Normalized Cumulative Number of Earthquakes', fontsize=nFontsize)
     # ax4.set_title('Normalized Cumulative Earthquake Count Over Time', fontsize=TITLE_FONT_SIZE, fontweight='bold')

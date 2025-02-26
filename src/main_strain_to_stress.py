@@ -2,25 +2,24 @@ import numpy as np
 import math
 from datetime import datetime, timedelta
 
-
 def emprem(rr, ind):
     """
-    根据 PREM 地球模型计算给定半径下的物理参数。
+    Calculate physical parameters at a given radius based on the PREM Earth model.
 
-    参数:
-      rr  : 半径（km），0 ≤ rr ≤ 6371
-      ind : 调整因子，如果 ind < 0 并且所在层不在最外层，则将层编号减 1
+    Parameters:
+      rr  : Radius (km), 0 ≤ rr ≤ 6371
+      ind : Adjustment factor, if ind < 0 and the layer is not the outermost, decrement the layer index by 1
 
-    返回:
-      rho : 密度
-      vp  : P 波速度
-      vs  : S 波速度
-      qp  : P 波品质因子
-      qs  : S 波品质因子
+    Returns:
+      rho : Density
+      vp  : P-wave velocity
+      vs  : S-wave velocity
+      qp  : P-wave quality factor
+      qs  : S-wave quality factor
     """
-    # 定义 PREM 模型参数
+    # Define PREM model parameters
     r = np.array([0, 1221.5, 3480, 3630, 5600, 5701, 5771, 5971, 6151, 6291, 6346.6, 6356, 6368, 6371], dtype=float)
-    # d: 4 x 13 数组，每列对应一个层的参数
+    # d: 4 x 13 array, each column corresponds to parameters of a layer
     d = np.array([[13.0885, 12.5815, 7.9565, 7.9565, 7.9565, 5.3197, 11.2494, 7.1089, 2.691, 2.691, 2.9, 2.6, 2.6],
                   [0, -1.2638, -6.4761, -6.4761, -6.4761, -1.4836, -8.0298, -3.8045, 0.6924, 0.6924, 0, 0, 0],
                   [-8.8381, -3.6426, 5.5283, 5.5283, 5.5283, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -36,39 +35,39 @@ def emprem(rr, ind):
     qm = np.array([84.6, 1e30, 312, 312, 312, 143, 143, 143, 80, 600, 600, 600, 600])
     qk = np.array([1327.7, 57823, 57823, 57823, 57823, 57823, 57823, 57823, 57823, 57823, 57823, 57823, 57823])
 
-    # 检查 rr 是否在有效范围内
+    # Check if rr is within the valid range
     if rr < 0 or rr > 6371:
         raise ValueError("Radius is outside the valid range for the PREM model.")
 
-    # 查找所在层：找到最后一个满足 r[j] <= rr < r[j+1] 的 j
+    # Find the layer: locate the last j satisfying r[j] <= rr < r[j+1]
     i = None
     for j in range(len(r) - 1):
         if rr >= r[j] and rr < r[j + 1]:
             i = j
     if i is None and np.isclose(rr, r[-1]):
-        i = len(r) - 2  # 选取最外层
+        i = len(r) - 2  # Select the outermost layer
     if i is None:
         raise ValueError("Radius does not fall within any layer in the PREM model.")
 
-    # 如果 ind < 0 并且 i > 0，则调整层编号
+    # If ind < 0 and i > 0, adjust the layer index
     if ind < 0 and i > 0:
         i = i - 1
 
-    # 归一化半径
+    # Normalize radius
     x = rr / r[-1]
     print(f"rr = {rr}, i = {i}")
 
-    # 计算密度、P 波速度和 S 波速度（使用 Horner 法则）
+    # Calculate density, P-wave velocity, and S-wave velocity (using Horner's method)
     rho = d[0, i] + x * (d[1, i] + x * (d[2, i] + x * d[3, i]))
     vp = p[0, i] + x * (p[1, i] + x * (p[2, i] + x * p[3, i]))
     vs = s[0, i] + x * (s[1, i] + x * (s[2, i] + x * s[3, i]))
 
-    # S 波品质因子
+    # S-wave quality factor
     qs_val = qm[i]
     if qs_val > 1e10 or np.isnan(qs_val) or np.isinf(qs_val):
         qs_val = 0
 
-    # 计算 P 波品质因子
+    # Calculate P-wave quality factor
     vsvp = vs / vp
     vsvp2 = vsvp ** 2
     al = vsvp2 * 4 / 3
@@ -81,21 +80,21 @@ def emprem(rr, ind):
 def emdlv(r_val, ind):
     """
     Earth model setup for PREM
-    直接调用 emprem 函数计算参数。
+    Directly calls the emprem function to calculate parameters.
 
-    参数:
-      r_val : 半径（km）
-      ind   : 调整因子
-    返回:
-      与 emprem 相同的五个参数
+    Parameters:
+      r_val : Radius (km)
+      ind   : Adjustment factor
+    Returns:
+      Same five parameters as emprem
     """
     return emprem(r_val, ind)
 
 
-# --- 计算 Lamé 参数 ---
+# --- Calculate Lamé parameters ---
 def select_Lame(depth):
     """
-    根据给定深度计算 Lamé 参数（λ 和 μ）及其它参数
+    Calculate Lamé parameters (λ and μ) and other parameters based on the given depth
     """
     r = 6371.0 - depth  # Radius in km
     ind = 0
@@ -106,31 +105,31 @@ def select_Lame(depth):
     return lam, mu, depth, vp, vs, rho
 
 
-# --- 根据应变张量计算应力变化 ---
+# --- Calculate stress changes from strain tensor ---
 def strn2stress(strn, alamda, amiu, fc, str_val, dip, slip):
     """
-    输入:
-      strn: 6 x n numpy 数组，表示应变张量的 6 个分量（行顺序：exx, eyy, ezz, exy, exz, eyz）
-      alamda, amiu: Lamé 参数（λ 和 μ）
-      fc: 摩擦系数
-      str_val, dip, slip: 分别为断层走向、倾角、滑动角（单位：度）
-    输出:
-      dT: 剪应力变化（sgmxy）
-      dS: 正应力变化（sgmyy）
-      dCFF: Coulomb 应力变化 = sgmxy + fc * sgmyy
+    Input:
+      strn: 6 x n numpy array, representing the 6 components of the strain tensor (row order: exx, eyy, ezz, exy, exz, eyz)
+      alamda, amiu: Lamé parameters (λ and μ)
+      fc: Friction coefficient
+      str_val, dip, slip: Fault strike, dip, and slip angles (in degrees)
+    Output:
+      dT: Shear stress change (sgmxy)
+      dS: Normal stress change (sgmyy)
+      dCFF: Coulomb stress change = sgmxy + fc * sgmyy
     """
     n = strn.shape[1]
     dT = np.zeros(n)
     dS = np.zeros(n)
     dCFF = np.zeros(n)
 
-    # 角度转换为弧度
+    # Convert angles to radians
     rad = math.pi / 180.0
     strr = str_val * rad
     dipr = dip * rad
     slipr = slip * rad
 
-    # 计算三角函数值
+    # Calculate trigonometric values
     css = math.cos(strr)
     sns = math.sin(strr)
     csd = math.cos(dipr)
@@ -138,7 +137,7 @@ def strn2stress(strn, alamda, amiu, fc, str_val, dip, slip):
     csl = math.cos(slipr)
     snl = math.sin(slipr)
 
-    # 计算断层滑动向量和法向量分量
+    # Calculate fault slip vector and normal vector components
     a11 = csl * sns - csd * snl * css
     a12 = csl * css + csd * snl * sns
     a13 = snl * snd
@@ -172,18 +171,19 @@ def strn2stress(strn, alamda, amiu, fc, str_val, dip, slip):
     return dT, dS, dCFF
 
 
-# --- 从应变文件计算应力变化 ---
+# --- Calculate stress changes from strain file ---
 def strain_to_stress(infile, alamda, amiu, fc, str_val, dip, slip, t_stress_start, t_sample):
     """
-    读取应变数据文件，计算体积应变和应力变化。
-    文件中每一行从第20个字符开始包含 7 个浮点数，其中前6个为应变张量分量，
-    第7个数可忽略。体积应变 dV = exx+eyy+ezz。
+    Read strain data file, calculate volumetric strain and stress changes.
+    Each line in the file contains 7 floating-point numbers starting from the 20th character,
+    where the first 6 are strain tensor components, and the 7th can be ignored.
+    Volumetric strain dV = exx + eyy + ezz.
 
-    返回:
-      normal_stress: 正应力变化（dS）
-      shear_stress: 剪应力变化（dT）
-      volumetric_strain: 体积应变变化 dV
-      t_tide: 以 t_stress_start 为起始、采样间隔为 t_sample（秒）的时间向量（numpy 数组，每个元素为 datetime 对象）
+    Returns:
+      normal_stress: Normal stress change (dS)
+      shear_stress: Shear stress change (dT)
+      volumetric_strain: Volumetric strain change dV
+      t_tide: Time vector starting from t_stress_start with sampling interval t_sample (seconds) (numpy array, each element is a datetime object)
     """
     lines = []
     with open(infile, 'r') as f:
@@ -192,40 +192,38 @@ def strain_to_stress(infile, alamda, amiu, fc, str_val, dip, slip, t_stress_star
             if line:
                 lines.append(line)
     neq = len(lines)
-    # 预分配应变张量和体积应变数组
+    # Preallocate strain tensor and volumetric strain arrays
     strn = np.zeros((6, neq))
     dV = np.zeros(neq)
 
     for i, line in enumerate(lines):
-        parts = line.split()  # 按空格分割，得到各列
+        parts = line.split()  # Split by spaces to get columns
         try:
-            # 假设数据列从第三列开始，取出6个数值（应变数据）
-            # parts[0] 为日期, parts[1] 为时间，parts[2:8] 为应变数据
+            # Assume data columns start from the third column, take 6 values (strain data)
+            # parts[0] is date, parts[1] is time, parts[2:8] are strain data
             numbers = list(map(float, parts[2:8]))
             if len(numbers) < 6:
-                raise ValueError("数据不足")
+                raise ValueError("Insufficient data")
         except Exception as e:
-            raise ValueError(f"第 {i + 1} 行解析错误: {line}\n{e}")
+            raise ValueError(f"Error parsing line {i + 1}: {line}\n{e}")
 
         strn[:, i] = numbers
-        # 计算体积应变：前三个分量之和
+        # Calculate volumetric strain: sum of the first three components
         dV[i] = numbers[0] + numbers[1] + numbers[2]
 
-    # 调用 strn2stress 计算应力变化
+    # Call strn2stress to calculate stress changes
     dT, dS, dCFF = strn2stress(strn, alamda, amiu, fc, str_val, dip, slip)
 
-    # 假设 t_stress_start 是字符串
+    # Assume t_stress_start is a string
     if isinstance(t_stress_start, str):
         # print(t_stress_start)
         t_stress_start = datetime.strptime(t_stress_start, '%Y-%m-%d')
 
-    # 生成时间向量 t_tide，从 t_stress_start 开始，采样间隔为 t_sample 秒
+    # Generate time vector t_tide, starting from t_stress_start, with sampling interval t_sample seconds
     t_tide = np.array([t_stress_start + timedelta(seconds=int(i * t_sample)) for i in range(neq)])
 
-    normal_stress = dS * 1e9  # 正应力变化
-    shear_stress = dT * 1e9  # 剪应力变化
+    normal_stress = dS * 1e9  # Normal stress change
+    shear_stress = dT * 1e9  # Shear stress change
     volumetric_strain = dV * 1e10
 
     return normal_stress, shear_stress, volumetric_strain, t_tide
-
-

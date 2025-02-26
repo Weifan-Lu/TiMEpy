@@ -140,15 +140,3 @@ def get_bootstrap_b_values(magnitudes, delta=0.05, n_boot=1000):
         if b_val_sample is not None:
             boot_b_values.append(b_val_sample)
     return np.array(boot_b_values)
-
-#
-# boot_b_vals = get_bootstrap_b_values(magnitudes, delta=0.05, n_boot=1000)
-#
-# if len(boot_b_vals) > 0:
-#     plt.figure(figsize=(8, 5))
-#     plt.hist(boot_b_vals, bins=30, density=True, color='skyblue', edgecolor='k', alpha=0.7)
-#     plt.xlabel('Estimated b-value')
-#     plt.ylabel('Probability density')
-#     plt.title('Bootstrap Distribution of b-value')
-#     plt.grid(True)
-#     plt.show()
