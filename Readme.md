@@ -1,4 +1,4 @@
-# TMEpy
+# TiMEpy
 
 This package provides tools for analyzing Tidal Modulation of slow and fast Earthquakes.
 
