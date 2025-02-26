@@ -10,16 +10,16 @@ rcParams['font.family'] = 'Arial'
 
 
 def ana5_seg_region(config):
-    # 关闭所有已有图窗
+    # Close all existing Windows
     plt.close('all')
 
-    # 读取观测数据（txt 文件）
+    # Read observation data (txt file)
     AllphaN = mf.load_txt_data(config.phase_stress_obs + '_N.txt')
     AllphaS = mf.load_txt_data(config.phase_stress_obs + '_S.txt')
     AllphaCFS = mf.load_txt_data(config.phase_stress_obs + '_CFS.txt')
     AllphaVol = mf.load_txt_data(config.phase_stress_obs + '_Vol.txt')
 
-    # 读取参考数据（txt 文件）
+    # Read reference data (txt file)
     AllphaN_ref = mf.load_txt_data(config.phase_stress_ref + '_N.txt')
     AllphaS_ref = mf.load_txt_data(config.phase_stress_ref + '_S.txt')
     AllphaCFS_ref = mf.load_txt_data(config.phase_stress_ref + '_CFS.txt')
@@ -30,8 +30,8 @@ def ana5_seg_region(config):
     # Define stress types and extract corresponding variables from the loaded data.
     stress_types = ['Normal Stress', 'Shear Stress', 'CFS', 'Volumetric Strain']
     # Parameter settings
-    grid_spacing = 0.2  # 每个网格 0.2 度
-    threshold = 20  # 每个网格至少需要 20 个样本 (MATLAB comment said 10, but variable is 20)
+    grid_spacing = 0.2  # 0.2 degrees per grid
+    threshold = 20  # At least 20 samples are required per grid
     bin_phase = config.bin_phase
     initial_guess = config.initial_guess
 
