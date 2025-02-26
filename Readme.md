@@ -7,7 +7,7 @@ This package provides tools for analyzing Tidal Modulation of slow and fast Eart
 - **Python 3.8.9**
 
 ## Run
-Navigate to the ex_rc folder and directly execute main_run.py, wherein each step can be performed independently
+Navigate to the **ex_ridgecrest** folder and directly execute **main_run.py**, wherein each step can be performed independently
 
 
 
