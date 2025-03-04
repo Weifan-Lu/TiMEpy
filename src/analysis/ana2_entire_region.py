@@ -6,7 +6,7 @@ from matplotlib import rcParams
 
 rcParams['font.family'] = 'Arial'
 
-def ana2_all_region(config):
+def ana2_entire_region(config):
     # Close all existing figure windows
     plt.close('all')
 

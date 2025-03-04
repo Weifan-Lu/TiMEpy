@@ -13,15 +13,14 @@ from config import Config
 class ExtendedConfig(Config):
     def __init__(self):
         BASE_PATH = '../ex_ridgecrest/'
-        Study_region = 'New_RC_'
+        Study_region = 'RC_'
         super().__init__(BASE_PATH,Study_region)
         # Base path
         self.data_original = 'input/ridgrest_10years.txt'
 
-        # Mainshock time
+        # Mainshock information
         self.mainshock_t = datetime(2019, 7, 4, 0, 0, 0)
 
-        # Fault parameters
         self.str = 321
         self.dip = 81
         self.slip = 180
@@ -32,9 +31,8 @@ class ExtendedConfig(Config):
         # %% Selection region parameters
         self.lat_center = 35.72
         self.lon_center = -117.56
-        self.side_length = 0.4
-        self.side_length_x = 0.1
-        self.side_length_y = 1.0
+        self.side_length_x = 0.05
+        self.side_length_y = 0.5
         self.start_time = datetime(2010, 1, 1, 0, 0, 0)
         self.end_time = datetime(2019, 7, 3, 0, 0, 0)
         self.depth_cut = 30

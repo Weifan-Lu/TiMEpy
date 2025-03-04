@@ -11,7 +11,7 @@ import visualization as vis
 mpl.rcParams['font.size'] = 12
 
 
-def ana4_b_pos(config):
+def ana4_b_value(config):
     plt.close('all')
 
     # 1. Load data

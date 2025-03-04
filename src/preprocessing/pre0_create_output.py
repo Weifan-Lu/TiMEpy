@@ -1,7 +1,7 @@
 import os
 
 
-def pre0_creat_output(config):
+def pre0_create_output(config):
     """
     Create the output directories if they do not exist.
     This function creates the base output folder and its subfolders.

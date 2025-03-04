@@ -6,7 +6,7 @@ import visualization as vis
 import os
 
 
-def ana3_time_evl(config):
+def ana3_temp_variation(config):
     plt.close('all')
 
     # Read observational data (txt files)
