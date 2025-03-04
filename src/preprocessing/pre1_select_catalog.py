@@ -170,7 +170,7 @@ def pre1_select_catalog(config):
 
     plt.tight_layout()
     fig.savefig(config.select_data_fig, dpi=150, bbox_inches='tight')
-    plt.show()
+    # plt.show()
 
     #
     #
