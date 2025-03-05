@@ -26,12 +26,22 @@ Follow these steps to get started quickly:
      ```bash
         python ex_pre0_create_output.py
      
-   ```bash
-    python ex_pre0_create_output.py
-    python ex_pre1_select_catalog.py
-    python ex_pre2_decluster_NNA.py
-    python ex_pre3_strain_to_stress.py
-    python ex_ana1_calc_tidal_phase.py
+   - **Select catalog:**  
+     ```bash
+        python ex_pre1_select_catalog.py
+     
+   - **Decluster using NNA:**  
+     ```bash 
+        python ex_pre2_decluster_NNA.py
+     
+   - **Convert strain to stress:**  
+     ```bash 
+        python ex_pre3_strain_to_stress.py
+   ### Analysis
+   - **Calculate tidal phase:**
+      ```bash
+        python ex_ana1_calc_tidal_phase.py
+      
     python ex_ana2_entire_region.py
     python ex_ana3_temp_variation.py
     python ex_ana4_b_value.py
