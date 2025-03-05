@@ -46,5 +46,5 @@ class Config:
         self.TM_time_earthquake_number = os.path.join(self.output_fig, Study_region + 'temporal_variation_earthquake_number.pdf')
 
         self.TM_all_region_stress = os.path.join(self.output_fig, Study_region + 'TM_time_tidal_stress.pdf')
-        self.TM_time_tidal_all_CFS = os.path.join(self.output_fig, Study_region + 'temporal_variation__CFS.pdf')
+        self.TM_time_tidal_all_CFS = os.path.join(self.output_fig, Study_region + 'temporal_variation_CFS.pdf')
         self.TM_earthquake_b_positive = os.path.join(self.output_fig, Study_region + 'b_value.pdf')
