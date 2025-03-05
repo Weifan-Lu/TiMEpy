@@ -75,10 +75,10 @@ Of course, you must change the following red values properly.
 ## End
 In this folder, the sampling rate has been adjusted to record one data point every 6 minutes (0.1 hours).
 
-Rigestcrest's final tidal strain results are as follows:
+Ridgecrest region's final tidal strain results are as follows:
 
 ```
-  Time ε𝑥𝑥 ε𝑦𝑦 ε𝑧𝑧 ε𝑥𝑥 ε𝑥𝑥 ε𝑦𝑦 Elapsed time [min.]
+  Time ε𝑥𝑥 ε𝑦𝑦 ε𝑧𝑧 ε𝑥𝑦 ε𝑥𝑧 ε𝑦𝑧 Elapsed time [min.]
   2009/01/01 00:00 -0.7170E-09 -0.1403E-08  0.8150E-09  0.3894E-08 -0.7200E-11 -0.9670E-10        0.0
   2009/01/01 00:06 -0.7610E-09 -0.1788E-08  0.9784E-09  0.4183E-08 -0.2300E-11 -0.8360E-10        6.0
   2009/01/01 00:12 -0.8110E-09 -0.2185E-08  0.1148E-08  0.4461E-08  0.3000E-11 -0.7070E-10       12.0
