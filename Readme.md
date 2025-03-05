@@ -57,6 +57,8 @@ Follow these steps to get started quickly:
 
 For a comprehensive, step-by-step tutorial on using TiMEpy, refer to the [Simple_tutorial.ipynb](https://github.com/Weifan-Lu/TiMEpy/blob/main/Simple_tutorial.ipynb)  file—a detailed guide developed using Jupyter Notebook
 
+In addition to the earthquake directory, tidal strain is also essential. Tidal strain is generated using **TidalStrain.2**, developed by XXX. Once you have completed testing the examples and are ready to analyze your actual data, please use **TidalStrain.2** to obtain the tidal strain. Detailed analysis and practical experience are documented within the **TidalStrain.2** file.
+
 
 ## Contact
 
