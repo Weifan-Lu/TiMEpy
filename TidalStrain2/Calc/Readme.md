@@ -18,14 +18,18 @@ To change the sampling rate, you’ll need to update the following files:
 Follow these steps to adjust the sampling rate to your desired interval:
 
 1. **Modify | earthtide.input5.base**
+
+```base
+    JA,JB,JC,JD,JE :initial Year,Month,Day,Hour,Minute
+    961,0.05 :number of calc., calc. interval(hours)
+    PH,RM,0.0,DP :lat.,lon.,height(m),depth(km)
+    56.0,0.D0 :ET-UT(sec), diff. from UT(hour)
+    6 :Kind(1:grv,2:NStlt,3:EWtlt,4:vol,5:sea,6:strain-tensor)
+
 NN: Number of calculations. For example, if you would like to set the sampling interval at 3 minutes for 2 days, you should set 961 (= 60*24*2 / 3 +1). If 6 minutes for 1 day, 241 (= 60*24 / 6 +1). If 15 minutes for 3660 days (about 10 years), 351361 (= 60*24*3660 / 15 +1).
 ST: Step or interval of calculations in hours. Note that we recommend 0.05 (= 3 minutes) as minimum because the unit of the sampling interval of ocean tide loading effects combined later is integer minutes.
 
-JA,JB,JC,JD,JE :initial Year,Month,Day,Hour,Minute
-961,0.05 :number of calc., calc. interval(hours)
-PH,RM,0.0,DP :lat.,lon.,height(m),depth(km)
-56.0,0.D0 :ET-UT(sec), diff. from UT(hour)
-6 :Kind(1:grv,2:NStlt,3:EWtlt,4:vol,5:sea,6:strain-tensor)
+
 
 
 2. ocean_loading.in.base
