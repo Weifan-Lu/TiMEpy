@@ -1,0 +1,18 @@
+JA,JB,JC,JD,JE         :initial Year,Month,Day,Hour,Minute
+1405441,0.1              :number of calc., calc. interval(hours)
+PH,RM,0.0,DP           :lat.,lon.,height(m),depth(km)
+56.0,0.D0              :ET-UT(sec), diff. from UT(hour)
+6                      :Kind(1:grv,2:NStlt,3:EWtlt,4:vol,5:sea,6:strain-tensor)
+
+
+
+
+! Memo
+! for 1 day / every 15 min
+!97,0.25               :number of calc., calc. interval(hours)
+!
+! for 2 days / every 15 min
+!193,0.25
+!
+! for 2 days / every 3 min
+!961,0.05

@@ -1,0 +1,14 @@
+*********************[ Mandatory Cards ]**********************
+STAPOSD eventID , longitude , latitude , depth , 0.0
+WAVE    ALL
+KIND    ST
+**********************[ Option Cards ]************************
+PREDICT 1,starttime,endtime,6
+PREFMT 5,1
+GREENF 1
+MESH3 ON
+MESH4 ON
+FULLMESH ON
+UNIT6  ocean_loading.log
+UNIT20 ocean_loading.out
+END
