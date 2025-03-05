@@ -6,6 +6,11 @@ TidalStrain.2.sh: The main script file, where the nevent parameter needs to be m
 event.in: The input file containing event data, with the number of rows corresponding to the nevent value.
 
 ## Overview of Relevant Files
+
+To change the sampling rate, you’ll need to update the following files:
+
+-  earthtide.input5.base: Controls the solid Earth tide calculations.
+
 1. earthtide.input5.base
 NN: Number of calculations. For example, if you would like to set the sampling interval at 3 minutes for 2 days, you should set 961 (= 60*24*2 / 3 +1). If 6 minutes for 1 day, 241 (= 60*24 / 6 +1). If 15 minutes for 3660 days (about 10 years), 351361 (= 60*24*3660 / 15 +1).
 ST: Step or interval of calculations in hours. Note that we recommend 0.05 (= 3 minutes) as minimum because the unit of the sampling interval of ocean tide loading effects combined later is integer minutes.
