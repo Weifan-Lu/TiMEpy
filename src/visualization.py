@@ -5,11 +5,9 @@ from datetime import datetime
 from matplotlib import rcParams, cm, colors
 from matplotlib.colors import ListedColormap
 from matplotlib.cm import ScalarMappable
-import logging
-logging.getLogger('matplotlib.font_manager').setLevel(logging.ERROR)
 
-rcParams['font.family'] = 'Arial'
-
+# rcParams['font.family'] = 'Arial'
+rcParams['font.family'] = 'DejaVu Sans'
 
 def plot_p_value_subplot(subplot_idx, y_data, time_series, komo_t, title_text, ax=None, font_size=14):
     """
@@ -294,7 +292,7 @@ def plot_tidal_sensitivity_2x2(
     # print(len(shear_stress_CFS), len(event_rate_CFS))
 
     fig, axs = plt.subplots(2, 2, figsize=(20, 16))
-    plt.rcParams.update({'font.size': 24, 'font.family': 'arial'})
+    # plt.rcParams.update({'font.size': 24, 'font.family': 'arial'})
     n_front = 24
     n_front_lab = 20
     n_linewidth = 2
@@ -313,7 +311,7 @@ def plot_tidal_sensitivity_2x2(
            linewidth=n_linewidth, label='Ref', alpha=0.7)
     ax.bar(centers1, counts2, width=np.diff(edges1), color='none', edgecolor='r',
            linewidth=n_linewidth, label='Obs', alpha=0.7)
-    ax.set_xlabel(r'Volumetric Strain ($\times 10^{10}$)', fontsize=n_front,fontname='Arial')
+    ax.set_xlabel(r'Volumetric Strain ($\times 10^{10}$)', fontsize=n_front)
     ax.set_ylabel('Frequency', fontsize=n_front)
     ax.legend(fontsize=14)
     ax.tick_params(axis='both', labelsize=n_front_lab)
