@@ -2,34 +2,19 @@
 
 This package provides tools for analyzing Tidal Modulation of slow and fast Earthquakes.
 
-## Requirements
-
-- **Python 3.8.9**
-
-## Run
-Navigate to the **ex_ridgecrest** folder and directly execute **main_run.py**, wherein each step can be performed independently
-
-A detailed user manual will be available soon, please understand.
-
-
-### Third-Party Libraries
-
-- **numpy**: For numerical computations.
-- **matplotlib**: For data visualization (plotting, date handling, etc.).
-- **scipy**: For optimization, signal processing, and other scientific computations.
-
-### Built-in Python Modules
-
-This package also uses built-in modules such as:
-- `datetime`
-- `os`
-- `math`
-
-These modules come with the standard Python installation, so no additional installation is required.
-
-## Installation
-
-Install the third-party libraries using pip:
-
-```bash
+git clone https://github.com/Weifan-Lu/TiMEpy
 pip install numpy matplotlib scipy
+cd TiMEpy/ex_ridgecrest
+
+## run all .py
+python main_run.py
+
+## or
+python ex_pre0_create_output.py
+python ex_pre1_select_catalog.py
+python ex_pre2_decluster_NNA.py
+python ex_pre3_strain_to_stress.py
+python ex_ana1_calc_tidal_phase.py
+python ex_ana2_entire_region.py
+python ex_ana3_temp_variation.py
+python ex_ana4_b_value.py
