@@ -30,4 +30,11 @@ UNIT6 ocean_loading.log
 UNIT20 ocean_loading.out
 END
 
-2. 
+3. sum_both_list.f
+[Attention]
+If you would like to change the sampling interval and duration, you can change red values of “tinterval=3.0” and “do i=1,961” in sum_both_list.f.
+For example, every 6 minutes for 1 day: tinterval=6.0, do i=1,241.
+1 minutes for 28 days: tinterval=1.0, do i=1,40321.
+Of course, you must change the following red values properly.
+・Solid tide: NN and ST (961,0.05) in “earthtide.input5.base (see section 3-1)”
+・Ocean tide: PREDICT 1,starttime,endtime,3 in “ocean_loading.in.base (see section 3-2)”
