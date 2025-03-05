@@ -29,27 +29,29 @@ Follow these steps to adjust the sampling rate to your desired interval:
 NN: Number of calculations. For example, if you would like to set the sampling interval at 3 minutes for 2 days, you should set 961 (= 60*24*2 / 3 +1). If 6 minutes for 1 day, 241 (= 60*24 / 6 +1). If 15 minutes for 3660 days (about 10 years), 351361 (= 60*24*3660 / 15 +1).
 ST: Step or interval of calculations in hours. Note that we recommend 0.05 (= 3 minutes) as minimum because the unit of the sampling interval of ocean tide loading effects combined later is integer minutes.
 
+2. **Modify | ocean_loading.in.base**
 
+```base
+    *********************[ Mandatory Cards ]**********************
+    STAPOSD eventID , longitude , latitude , depth , 0.0
+    WAVE ALL
+    KIND ST
+    **********************[ Option Cards ]************************
+    PREDICT 1,starttime,endtime,3
+    PREFMT 5,1
+    GREENF 1
+    MESH3 ON
+    MESH4 ON
+    FULLMESH ON
+    UNIT6 ocean_loading.log
+    UNIT20 ocean_loading.out
+    END
+```
 
-
-2. ocean_loading.in.base
 If you would like to set the sampling interval to 15 minutes, you should change 3 in “PREDICT 1,starttime,endtime,3” to 15.
-*********************[ Mandatory Cards ]**********************
-STAPOSD eventID , longitude , latitude , depth , 0.0
-WAVE ALL
-KIND ST
-**********************[ Option Cards ]************************
-PREDICT 1,starttime,endtime,3
-PREFMT 5,1
-GREENF 1
-MESH3 ON
-MESH4 ON
-FULLMESH ON
-UNIT6 ocean_loading.log
-UNIT20 ocean_loading.out
-END
 
-3. sum_both_list.f
+
+4. sum_both_list.f
 [Attention]
 If you would like to change the sampling interval and duration, you can change red values of “tinterval=3.0” and “do i=1,961” in sum_both_list.f.
 For example, every 6 minutes for 1 day: tinterval=6.0, do i=1,241.
