@@ -31,11 +31,9 @@ Follow these steps to get started quickly:
    - **Select catalog:**  
      ```bash
         python ex_pre1_select_catalog.py
-     
    - **Decluster using NNA:**  
      ```bash 
         python ex_pre2_decluster_NNA.py
-     
    - **Convert strain to stress:**  
      ```bash 
         python ex_pre3_strain_to_stress.py
@@ -48,7 +46,7 @@ Follow these steps to get started quickly:
          python ex_ana2_entire_region.py
    - **Temporal variation analysis:**
       ```bash  
-         python ex_ana3_temp_variation.py
+          python ex_ana3_temp_variation.py
    - **b-value computation:**
       ```bash  
          python ex_ana4_b_value.py
