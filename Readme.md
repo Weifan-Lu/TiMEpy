@@ -17,10 +17,11 @@ Follow these steps to get started quickly:
        cd TiMEpy/ex_ridgecrest
 
 2. **Run the complete analysis:**
+   All scripts are integrated
    ```bash
     python main_run.py
 
-3. **Run each step separately:**
+4. **Run each step separately:**
    ### Preprocessing
    - **Create output:**  
      ```bash
@@ -49,4 +50,4 @@ Follow these steps to get started quickly:
          python ex_ana3_temp_variation.py
    - **b-value computation:**
       ```bash  
-      python ex_ana4_b_value.py
+         python ex_ana4_b_value.py
