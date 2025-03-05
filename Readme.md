@@ -2,10 +2,6 @@
 
 This package provides tools for analyzing Tidal Modulation of slow and fast Earthquakes.
 
-Weifan Lu
-The University of Tokyo & Peking University\
-
-
 <img src="https://raw.githubusercontent.com/Weifan-Lu/TiMEpy/main/Logo.png" alt="TiMEpy Logo" width="400"/>
 
 
