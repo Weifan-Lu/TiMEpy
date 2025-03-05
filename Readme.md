@@ -41,7 +41,12 @@ Follow these steps to get started quickly:
    - **Calculate tidal phase:**
       ```bash
         python ex_ana1_calc_tidal_phase.py
-      
-    python ex_ana2_entire_region.py
-    python ex_ana3_temp_variation.py
-    python ex_ana4_b_value.py
+   - **Entire region analysis:**
+      ```bash  
+         python ex_ana2_entire_region.py
+   - **Temporal variation analysis:**
+      ```bash  
+         python ex_ana3_temp_variation.py
+   - **b-value computation:**
+      ```bash  
+      python ex_ana4_b_value.py
