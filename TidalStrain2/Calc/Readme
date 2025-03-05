@@ -1,2 +1,0 @@
-TidalStrain.2.sh: The main script file, where the nevent parameter needs to be modified.
-event.in: The input file containing event data, with the number of rows corresponding to the nevent value.
