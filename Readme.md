@@ -5,10 +5,16 @@ This package provides tools for analyzing Tidal Modulation of slow and fast Eart
 <img src="https://raw.githubusercontent.com/Weifan-Lu/TiMEpy/main/Logo.png" alt="TiMEpy Logo" width="400"/>
 
 
+## Quick Start
 
-    git clone https://github.com/Weifan-Lu/TiMEpy
-    pip install numpy matplotlib scipy
-    cd TiMEpy/ex_ridgecrest
+Follow these steps to get started quickly:
+
+1. **Clone the repository and install dependencies:**
+
+   ```bash
+       git clone https://github.com/Weifan-Lu/TiMEpy.git
+       pip install numpy matplotlib scipy
+       cd TiMEpy/ex_ridgecrest
 
 Run all .py
 
