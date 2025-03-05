@@ -16,7 +16,7 @@ Follow these steps to get started quickly:
        pip install numpy matplotlib scipy
        cd TiMEpy/ex_ridgecrest
 
-Run all .py
+2. **Run the complete analysis:**
 
     python main_run.py
 
