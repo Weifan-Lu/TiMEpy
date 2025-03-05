@@ -2,8 +2,10 @@
 
 The TidalStrain.2 project allows you to customize the sampling rate for tidal strain calculations by modifying parameters across several key files. This section guides you through the process step-by-step, ensuring consistency and accuracy in your adjustments.
 
-TidalStrain.2.sh: The main script file, where the nevent parameter needs to be modified.
-event.in: The input file containing event data, with the number of rows corresponding to the nevent value.
+### Before Changing the Sampling Rate, Pay Attention to:
+**TidalStrain.2.sh**: The main script file where the `nevent` parameter needs to be modified.  
+**event.in**: The input file containing event data, with the number of rows matching the `nevent` value.
+
 
 ## Overview of Relevant Files
 
