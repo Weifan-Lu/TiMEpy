@@ -51,11 +51,10 @@ ST: Step or interval of calculations in hours. Note that we recommend 0.05 (= 3 
 If you would like to set the sampling interval to 15 minutes, you should change 3 in “PREDICT 1,starttime,endtime,3” to 15.
 
 
-4. sum_both_list.f
-[Attention]
+3. **Modify | sum_both_list.f**
 If you would like to change the sampling interval and duration, you can change red values of “tinterval=3.0” and “do i=1,961” in sum_both_list.f.
 For example, every 6 minutes for 1 day: tinterval=6.0, do i=1,241.
 1 minutes for 28 days: tinterval=1.0, do i=1,40321.
 Of course, you must change the following red values properly.
-・Solid tide: NN and ST (961,0.05) in “earthtide.input5.base (see section 3-1)”
-・Ocean tide: PREDICT 1,starttime,endtime,3 in “ocean_loading.in.base (see section 3-2)”
+・Solid tide: NN and ST (961,0.05) in “earthtide.input5.base (see 1. **Modify | earthtide.input5.base**)”
+・Ocean tide: PREDICT 1,starttime,endtime,3 in “ocean_loading.in.base (see 2. **Modify | ocean_loading.in.base**)”
