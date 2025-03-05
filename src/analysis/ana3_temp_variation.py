@@ -8,12 +8,17 @@ import os
 
 def ana3_temp_variation(config):
     plt.close('all')
+    print('====== Analysis | Temporal variation: Start ======')
+    print('Loading observational data (txt files)')
 
     # Read observational data (txt files)
     AllphaN = mf.load_txt_data(config.phase_stress_obs + '_N.txt')
     AllphaS = mf.load_txt_data(config.phase_stress_obs + '_S.txt')
     AllphaCFS = mf.load_txt_data(config.phase_stress_obs + '_CFS.txt')
     AllphaVol = mf.load_txt_data(config.phase_stress_obs + '_Vol.txt')
+
+
+    print('Loading reference data (txt files)')
 
     # Read reference data (txt files)
     AllphaN_ref = mf.load_txt_data(config.phase_stress_ref + '_N.txt')
@@ -29,7 +34,6 @@ def ana3_temp_variation(config):
     tmax = mdates.date2num(dt_end)
     step_days = config.step_days
     window_days = config.window_days
-    print(tmin,tmax)
 
     # Initialize various result lists
     p_values_N = []
@@ -188,6 +192,7 @@ def ana3_temp_variation(config):
     vis.plot_p_value_subplot(3, p_values_CFS, time_series, komo_t, 'Coulomb stress', ax=axs[3])
     plt.tight_layout()
     plt.savefig(config.TM_time_tidal_P_value, format='pdf')
+    print(f"The Shuster test (p-value) figure plotted and saved to {config.TM_time_tidal_P_value}")
 
     # (2) Amplitude plots — four subplots
     fig, axs = plt.subplots(4, 1, figsize=(8, 12))
@@ -197,6 +202,7 @@ def ana3_temp_variation(config):
     vis.plot_amp_value_subplot(3, Amp_CFS, time_series, komo_t, 'Coulomb stress', ax=axs[3])
     plt.tight_layout()
     plt.savefig(config.TM_time_tidal_amplitude, format='pdf')
+    print(f"The tidal phase amplitude figure plotted and saved to {config.TM_time_tidal_amplitude}")
 
     # (3) Phase shift plots — four subplots
     fig, axs = plt.subplots(4, 1, figsize=(8, 12))
@@ -206,6 +212,7 @@ def ana3_temp_variation(config):
     vis.plot_pha_value_subplot(3, shift_CFS, time_series, komo_t, 'Coulomb stress', ax=axs[3])
     plt.tight_layout()
     plt.savefig(config.TM_time_tidal_phase_shift, format='pdf')
+    print(f"The tidal phase shift figure plotted and saved to {config.TM_time_tidal_phase_shift}")
 
     # (4) Sensitivity plots — four subplots
     fig, axs = plt.subplots(4, 1, figsize=(8, 12))
@@ -215,6 +222,7 @@ def ana3_temp_variation(config):
     vis.plot_a_value_subplot(3, A_est_CFS, time_series, komo_t, 'Coulomb stress', ax=axs[3])
     plt.tight_layout()
     plt.savefig(config.TM_time_tidal_sensitivity, format='pdf')
+    print(f"The tidal sensitivity figure plotted and saved to {config.TM_time_tidal_sensitivity}")
 
     # (5) Comprehensive plots — four subplots (example with Coulomb stress)
     fig, axs = plt.subplots(4, 1, figsize=(8, 12))
@@ -225,6 +233,7 @@ def ana3_temp_variation(config):
     vis.plot_a_value_subplot(3, A_est_CFS, time_series, komo_t, 'Coulomb stress', ax=axs[3])
     plt.tight_layout()
     plt.savefig(config.TM_time_tidal_all_CFS, format='pdf')
+    print(f"The comprehensive figure (example: coulomb stress) plotted and saved to {config.TM_time_tidal_all_CFS}")
 
     # (6) Earthquake event count plot (taking the 5th column of A_est_N, which is the event count)
     fig, ax = plt.subplots(1, 1, figsize=(20, 3))
@@ -241,5 +250,7 @@ def ana3_temp_variation(config):
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
     plt.tight_layout()
     plt.savefig(config.TM_time_earthquake_number, format='pdf')
-
     plt.close('all')
+    print(f"The earthquake number figure plotted and saved to {config.TM_time_earthquake_number}")
+
+    print('====== Analysis | Temporal variation: End ======')

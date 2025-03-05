@@ -13,6 +13,7 @@ mpl.rcParams['font.size'] = 12
 
 def ana4_b_value(config):
     plt.close('all')
+    print('====== Analysis | B value measurement : Start ======')
 
     # 1. Load data
     data = np.loadtxt(config.data_select)
@@ -92,4 +93,7 @@ def ana4_b_value(config):
 
     plt.tight_layout()
     plt.savefig(config.TM_earthquake_b_positive, format='pdf')
-    plt.show()
+    print(f"The B value plotted and saved to {config.TM_earthquake_b_positive}")
+    print('====== Analysis | B value measurement : End ======')
+
+    # plt.show()

@@ -286,10 +286,10 @@ def plot_tidal_sensitivity_2x2(
         """
 
     # 创建 2x2 子图
-    print(len(shear_stress_Vol), len(event_rate_Vol))
-    print(len(shear_stress_S), len(event_rate_S))
-    print(len(shear_stress_N), len(event_rate_N))
-    print(len(shear_stress_CFS), len(event_rate_CFS))
+    # print(len(shear_stress_Vol), len(event_rate_Vol))
+    # print(len(shear_stress_S), len(event_rate_S))
+    # print(len(shear_stress_N), len(event_rate_N))
+    # print(len(shear_stress_CFS), len(event_rate_CFS))
 
     fig, axs = plt.subplots(2, 2, figsize=(20, 16))
     plt.rcParams.update({'font.size': 24, 'font.family': 'arial'})

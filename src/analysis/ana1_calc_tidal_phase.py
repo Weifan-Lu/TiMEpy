@@ -25,6 +25,8 @@ def ana1_calc_tidal_phase(config, opt):
     If opt is '1', data_select_decluster is used; otherwise, data_select is used.
     """
     ###
+    print('====== Analysis | Earthquakes are associated with tidal stresses: Start ======')
+
     print('Start calculating the phase of the tide (Obs)')
     ###
     # --------------------
@@ -143,6 +145,8 @@ def ana1_calc_tidal_phase(config, opt):
     vis.plot_stress_earthquake(AllphaVol[:, 0], AllphaVol[:, 2], AllphaN[:, 2], AllphaS[:, 2], AllphaCFS[:, 2], t_tide,
                                StressVol, StressN, StressS, StressCFS, config)
 
+    print(f"The figure plotted and saved to {config.TM_all_region_stress}")
+
     print('Start calculating the phase of the tide (Ref)')
 
     # --------------------
@@ -195,4 +199,16 @@ def ana1_calc_tidal_phase(config, opt):
     np.savetxt(config.phase_stress_ref + '_CFS.txt', AllphaCFS_ref, fmt='%.8f', delimiter='\t', header=header)
     np.savetxt(config.phase_stress_ref + '_Vol.txt', AllphaVol_ref, fmt='%.8f', delimiter='\t', header=header)
 
-    print("Tidal phase results have been saved as TXT files.")
+    print("Tidal phase results have been saved as TXT files with the following details:")
+    print(f"  - Observation files:")
+    print(f"      {config.phase_stress_obs + '_N.txt'} (Normal Stress)")
+    print(f"      {config.phase_stress_obs + '_S.txt'} (Shear Stress)")
+    print(f"      {config.phase_stress_obs + '_CFS.txt'} (Coulomb Failure Stress)")
+    print(f"      {config.phase_stress_obs + '_Vol.txt'} (Volume Change)")
+    print(f"  - Reference files:")
+    print(f"      {config.phase_stress_ref + '_N.txt'} (Normal Stress)")
+    print(f"      {config.phase_stress_ref + '_S.txt'} (Shear Stress)")
+    print(f"      {config.phase_stress_ref + '_CFS.txt'} (Coulomb Failure Stress)")
+    print(f"      {config.phase_stress_ref + '_Vol.txt'} (Volume Change)")
+
+    print('====== Analysis | Earthquakes are associated with tidal stresses: End ======')

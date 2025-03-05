@@ -38,6 +38,7 @@ def pre1_select_catalog(config):
     # Close all existing plots
 
     plt.close('all')
+    print('====== Processing | Select catalog: Start ======')
 
     # ----- 1. Load and sort raw data -----
     # Assume the data file contains the following columns per row:
@@ -170,6 +171,10 @@ def pre1_select_catalog(config):
 
     plt.tight_layout()
     fig.savefig(config.select_data_fig, dpi=150, bbox_inches='tight')
+    print(f"Selected catalog have been written to {config.data_select}")
+    print(f"The selected catalog has been successfully plotted and saved to {config.select_data_fig}")
+    print('====== Processing | Select catalog: End ======')
+
     # plt.show()
 
     #

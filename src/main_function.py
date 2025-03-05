@@ -494,8 +494,8 @@ def modulation_phase(data, bin, PhStress, plot_option=None):
     Prob = Prob_o / Po - 1
 
     phi_degs = (bin_edges[:-1] + bin_edges[1:]) / 2
-    print(Prob, phi_degs )
-    print(len(bin_edges),len(phi_degs))
+    # print(Prob, phi_degs )
+    # print(len(bin_edges),len(phi_degs))
     a_fit, phi0_fit, model = fit_periodic_function(phi_degs ,Prob)
     print(f"Fitted amplitude = {a_fit:.3f}")
     print(f"Fitted phase_shift = {phi0_fit:.3f} deg")
@@ -624,7 +624,7 @@ def modulation_stress(Stress_AM_bk, Stress_AM, initial_guess, plot_option):
 
 
     options = {
-        'disp': True,  # 是否打印优化信息
+        'disp': False,  # 是否打印优化信息
         'maxiter': 400,  # 最大迭代次数
         'xtol': 1e-6,  # 或者 'tol'、'gtol' 等可做精度调节
     }
@@ -637,7 +637,7 @@ def modulation_stress(Stress_AM_bk, Stress_AM, initial_guess, plot_option):
         hess=hess_neg_log_likelihood,
         options=options
     )
-    print(res)
+    # print(res)
     a_estimated, C_estimated = res.x
 
     H = hess_neg_log_likelihood(res.x)

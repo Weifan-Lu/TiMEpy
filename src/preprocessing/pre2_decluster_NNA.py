@@ -21,6 +21,8 @@ def pre2_decluster_NNA(config):
         Returns:
           None (The function generates plots and saves the declustered catalog to a file.)
         """
+    print('====== Processing | Decluster catalog: Start ======')
+
     # Read parameters
     start_time = config.start_time
     data_file = config.data_select
@@ -57,8 +59,10 @@ def pre2_decluster_NNA(config):
             line = f"{yr} {mon:02d} {day_:02d} {hr:02d} {minu:02d} {sec_:05.2f} {lat_val:f} {lon_val:f} {dep_val:04.2f} {mag_val:04.2f} {extra:d}\n"
             fid.write(line)
 
+    print(f"Declustered catalog have been written to {config.data_select_decluster}")
 
 
+    print('====== Processing | Decluster catalog: plot figures ======')
 
     # ----------------- Define control parameter variables -----------------
     # Figure size
@@ -197,3 +201,8 @@ def pre2_decluster_NNA(config):
     ax4.tick_params(labelsize=TICK_LABEL_SIZE)
     fig4.tight_layout()
     fig4.savefig(config.decluster_data_fig_cum, dpi=300)
+    print(f"The declustered catalog has been successfully plotted and saved to {config.decluster_data_fig_cum}")
+    print(f"The declustered catalog has been successfully plotted and saved to {config.decluster_data_fig_lat}")
+    print(f"The declustered catalog has been successfully plotted and saved to {config.decluster_data_fig_nna}")
+
+    print('====== Processing | Decluster catalog: End ======')

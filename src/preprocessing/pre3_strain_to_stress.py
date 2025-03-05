@@ -22,6 +22,9 @@ def pre3_strain_to_stress(config):
       - t_stress_start: Start time for stress calculation (datetime object or string in 'YYYY-MM-DD' format)
       - t_sample: Sampling interval (seconds)
     """
+
+    print('====== Processing | Strin to Stress: Start ======')
+
     infile = config.input_stain
     outfile = config.output_stress_txt
     fc = config.miu
@@ -80,3 +83,4 @@ def pre3_strain_to_stress(config):
             )
 
     print(f"Stress results have been written to {outfile}")
+    print('====== Processing | Strin to Stress: End ======')

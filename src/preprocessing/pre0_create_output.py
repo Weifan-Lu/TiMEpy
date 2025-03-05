@@ -14,9 +14,14 @@ def pre0_create_output(config):
         config.output_fig
     ]
 
+    print('====== Processing | Creating Output Folder: Start ======')
+
     for folder in folders:
         if not os.path.exists(folder):
             os.makedirs(folder)
             print(f"Created folder: {folder}")
         else:
             print(f"Folder already exists: {folder}")
+
+
+    print('====== Processing | Creating output folder: End ======')
