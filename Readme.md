@@ -20,7 +20,7 @@ Follow these steps to get started quickly:
    
    All scripts are integrated
    ```bash
-    python main_run.py
+      python main_run.py
 
 4. **Run each step separately:**
    ### Preprocessing
