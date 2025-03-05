@@ -1,6 +1,6 @@
 # TidalStrain.2
 
-TidalStrain.2 is a tool for calculating the theoretical tidal response. Originally developed by Dr. Fuyuki Hirose, this software is associated with research into the tidal forcing of interplate earthquakes.
+TidalStrain.2 is a tool for calculating the theoretical tidal response. Originally developed by Dr.` Fuyuki Hirose`, this software is associated with research into the tidal forcing of interplate earthquakes.
 
 ## Download
 The original TidalStrain.2 package is available for download from Dr. Fuyuki Hirose's website:  
