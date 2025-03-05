@@ -71,3 +71,7 @@ Of course, you must change the following red values properly.
 
 - Solid tide: NN and ST (961,0.05) in “earthtide.input5.base (see 1. **Modify | `earthtide.input5.base`**)”
 - Ocean tide: PREDICT 1,starttime,endtime,3 in “ocean_loading.in.base (see 2. **Modify | `ocean_loading.in.base`**)”
+
+## End
+In this direction, this 3 file have changed to 6 mintue
+
