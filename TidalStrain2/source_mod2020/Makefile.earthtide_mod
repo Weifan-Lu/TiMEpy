@@ -1,0 +1,20 @@
+.SUFFIXES: .f .o
+
+CC=/usr/bin/f95
+#CFLAGS   = -O3 -qstrict
+
+TARGET   = earthtide_mod
+
+.f.o:
+	$(CC) $(CFLAGS) -c $<
+
+OBJS     = earthtide_mod.o
+
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+	$(CC) -o $@ $(OBJS)
+
+.PHONY: clean
+clean:
+	rm -f $(OBJS) $(TARGET)

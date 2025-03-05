@@ -1,0 +1,26 @@
+# Makefile  for loadgreenf3_mod
+
+
+.SUFFIXES: .f .o
+
+CC=/usr/bin/f95
+#CFLAGS   = -O3 -qstrict
+
+TARGET   = loadgreenf3_mod
+
+.f.o:
+	$(CC) $(CFLAGS) -c $<
+
+OBJS     = loadgreenf3_mod.o sphlgd.o	
+
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+	$(CC) -o $@ $(OBJS)
+
+.PHONY: clean
+clean:
+	rm -f $(OBJS) $(TARGET)
+
+
+

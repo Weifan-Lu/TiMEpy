@@ -1,0 +1,6 @@
+make clean
+make
+make -f Makefile.earthtide_mod clean
+make -f Makefile.earthtide_mod
+make -f Makefile.loadgreenf3_mod clean
+make -f Makefile.loadgreenf3_mod
