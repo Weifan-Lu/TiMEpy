@@ -6,7 +6,16 @@ TidalStrain.2 is a tool for calculating the theoretical tidal response. Original
 The original TidalStrain.2 package is available for download from Dr. Fuyuki Hirose's website:  
 [https://www.mri-jma.go.jp/Dep/sei/fhirose/research/en.TidalStrain.html](https://www.mri-jma.go.jp/Dep/sei/fhirose/research/en.TidalStrain.html)
 
-TidalStrain.2 may have compatibility issues on different systems. To address this, I have provided modified compilation files for reference.
+## Installation
+
+1. **Download the Package:** Obtain the TidalStrain.2 package from the link above.
+2. **Review Compilation Files:** Due to potential compatibility issues across systems, please refer to the modified compilation files provided in this repository.
+3. **Follow Detailed Guidance in Calc Directory:**  
+   The `Calc` folder contains a comprehensive step-by-step guide on:
+   - Setting up your environment
+   - Compiling the source code (e.g., using provided Makefiles or project files)
+   - Running the tool with sample input files  
+   Make sure to review these instructions carefully to ensure proper installation.
 
 
 Reference:\
