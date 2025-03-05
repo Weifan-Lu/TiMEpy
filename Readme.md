@@ -2,13 +2,15 @@
 
 This package provides tools for analyzing Tidal Modulation of slow and fast Earthquakes.
 
-git clone https://github.com/Weifan-Lu/TiMEpy
-pip install numpy matplotlib scipy
-cd TiMEpy/ex_ridgecrest
+    git clone https://github.com/Weifan-Lu/TiMEpy
+    pip install numpy matplotlib scipy
+    cd TiMEpy/ex_ridgecrest
 
-run all .py
+Run all .py
 
     python main_run.py
+
+Run each step separately
 
     python ex_pre0_create_output.py
     python ex_pre1_select_catalog.py
