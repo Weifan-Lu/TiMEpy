@@ -71,3 +71,21 @@ Of course, you must change the following red values properly.
 
 - Solid tide: NN and ST (961,0.05) in “earthtide.input5.base (see 1. **Modify | `earthtide.input5.base`**)”
 - Ocean tide: PREDICT 1,starttime,endtime,3 in “ocean_loading.in.base (see 2. **Modify | `ocean_loading.in.base`**)”
+
+## End
+In this folder, the sampling rate has been adjusted to record one data point every 6 minutes (0.1 hours).
+
+Ridgecrest region's final tidal strain results are as follows:
+
+```
+  Time ε𝑥𝑥 ε𝑦𝑦 ε𝑧𝑧 ε𝑥𝑦 ε𝑥𝑧 ε𝑦𝑧 Elapsed time [min.]
+  2009/01/01 00:00 -0.7170E-09 -0.1403E-08  0.8150E-09  0.3894E-08 -0.7200E-11 -0.9670E-10        0.0
+  2009/01/01 00:06 -0.7610E-09 -0.1788E-08  0.9784E-09  0.4183E-08 -0.2300E-11 -0.8360E-10        6.0
+  2009/01/01 00:12 -0.8110E-09 -0.2185E-08  0.1148E-08  0.4461E-08  0.3000E-11 -0.7070E-10       12.0
+  2009/01/01 00:18 -0.8650E-09 -0.2591E-08  0.1323E-08  0.4730E-08  0.8500E-11 -0.5790E-10       18.0
+  2009/01/01 00:24 -0.9230E-09 -0.3006E-08  0.1503E-08  0.4988E-08  0.1460E-10 -0.4550E-10       24.0
+  2009/01/01 00:30 -0.9860E-09 -0.3428E-08  0.1687E-08  0.5235E-08  0.2080E-10 -0.3330E-10       30.0
+```
+
+
+
