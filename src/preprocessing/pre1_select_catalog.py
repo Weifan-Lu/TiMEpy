@@ -5,8 +5,8 @@ import matplotlib.dates as mdates
 import matplotlib.patches as patches
 from datetime import datetime
 import main_select_catalog as msc
-import cartopy.crs as ccrs
-import cartopy.feature as cfeature
+# import cartopy.crs as ccrs
+# import cartopy.feature as cfeature
 import matplotlib.ticker as mticker
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
