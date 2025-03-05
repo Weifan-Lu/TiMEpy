@@ -17,6 +17,7 @@ Follow these steps to get started quickly:
        cd TiMEpy/ex_ridgecrest
 
 2. **Run the complete analysis:**
+   
    All scripts are integrated
    ```bash
     python main_run.py
