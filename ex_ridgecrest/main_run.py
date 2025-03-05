@@ -5,7 +5,6 @@ import os
 from input_params_rc import ExtendedConfig
 
 src_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src'))
-print("src_path =", src_path)
 sys.path.insert(0, src_path)
 
 # import src  # At this point, the src package can be successfully imported
@@ -24,8 +23,6 @@ from analysis.ana4_b_value import ana4_b_value
 
 def main():
     config = ExtendedConfig()
-    print(config)
-    # Step 0: Create output directories
     pre0_create_output(config)
     pre1_select_catalog(config)
     pre2_decluster_NNA(config)
