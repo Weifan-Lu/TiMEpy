@@ -17,11 +17,11 @@ Follow these steps to get started quickly:
        cd TiMEpy/ex_ridgecrest
 
 2. **Run the complete analysis:**
-
+   ```bash
     python main_run.py
 
-Run each step separately
-
+3. **Run each step separately:**
+   ```bash
     python ex_pre0_create_output.py
     python ex_pre1_select_catalog.py
     python ex_pre2_decluster_NNA.py
