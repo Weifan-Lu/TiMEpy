@@ -11,30 +11,29 @@ Follow these steps to get started quickly:
 
 1. **Clone the repository and install dependencies:**
 
-   ```bash
+  ```
        git clone https://github.com/Weifan-Lu/TiMEpy.git
        pip install numpy matplotlib scipy
        cd TiMEpy/ex_ridgecrest
-
+  ```
 2. **Run the complete analysis:**
    
    All scripts are integrated
-   ```bash
+   ```
       python main_run.py
    ```
-
-4. **Run each step separately:**
+3. **Run each step separately:**
    ### Preprocessing
    - **Create output:**  
-     ```bash
+     ```
         python ex_pre0_create_output.py
      ```
    - **Select catalog:**  
-     ```bash
+     ```
         python ex_pre1_select_catalog.py
      ```
    - **Decluster using NNA:**  
-     ```bash 
+     ```
         python ex_pre2_decluster_NNA.py
      ```
    - **Convert strain to stress:**  
@@ -43,11 +42,11 @@ Follow these steps to get started quickly:
      ```
    ### Analysis
    - **Calculate tidal phase:**
-      ```bash
+      ```
         python ex_ana1_calc_tidal_phase.py
       ```
    - **Entire region analysis:**
-      ```bash  
+      ```
          python ex_ana2_entire_region.py
       ```
    - **Temporal variation analysis:**
@@ -55,7 +54,7 @@ Follow these steps to get started quickly:
           python ex_ana3_temp_variation.py
       ```
    - **b-value computation:**
-      ```bash  
+      ``` 
          python ex_ana4_b_value.py
       ```
 
