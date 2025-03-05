@@ -4,7 +4,7 @@ import main_function as mf
 import visualization as vis
 from matplotlib import rcParams
 
-rcParams['font.family'] = 'Arial'
+# rcParams['font.family'] = 'Arial'
 
 def ana2_entire_region(config):
     # Close all existing figure windows
