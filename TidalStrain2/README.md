@@ -12,12 +12,9 @@ The original TidalStrain.2 package is available for download from Dr. Fuyuki Hir
 2. **Review Compilation Files:** Due to potential compatibility issues across systems, please refer to the modified compilation files provided in this repository.
 3. **Follow Detailed Guidance in Calc Directory:**  
    The `Calc` folder contains a comprehensive step-by-step guide on:
-   - Setting up your environment
-   - Compiling the source code (e.g., using provided Makefiles or project files)
-   - Running the tool with sample input files  
-   Make sure to review these instructions carefully to ensure proper installation.
+   - Input event.in
+   - Change the sample rate
 
-
-Reference:\
+## Reference
 Hirose, F., Maeda, K., & Kamigaichi, O. (2019). Tidal Forcing of Interplate Earthquakes Along the Tonga-Kermadec Trench. Journal of Geophysical Research: Solid Earth, 124(10), 10498-10521. https://doi.org/https://doi.org/10.1029/2019JB018088 
 
