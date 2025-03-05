@@ -52,12 +52,18 @@ If you would like to set the sampling interval to 15 minutes, you should change 
 
 
 3. **Modify | sum_both_list.f**
-4. 
+
 If you would like to change the sampling interval and duration, you can change red values of “tinterval=3.0” and “do i=1,961” in sum_both_list.f.
 
-For example, every 6 minutes for 1 day: tinterval=6.0, do i=1,241.
+For example, every 6 minutes for 1 day: 
+```
+tinterval=6.0, do i=1,241.
+```
 
-1 minutes for 28 days: tinterval=1.0, do i=1,40321.
+1 minutes for 28 days: 
+```
+tinterval=1.0, do i=1,40321.
+```
 
 Of course, you must change the following red values properly.
 
