@@ -5,6 +5,8 @@ from datetime import datetime
 from matplotlib import rcParams, cm, colors
 from matplotlib.colors import ListedColormap
 from matplotlib.cm import ScalarMappable
+import logging
+logging.getLogger('matplotlib.font_manager').setLevel(logging.ERROR)
 
 rcParams['font.family'] = 'Arial'
 
