@@ -73,5 +73,6 @@ Of course, you must change the following red values properly.
 - Ocean tide: PREDICT 1,starttime,endtime,3 in “ocean_loading.in.base (see 2. **Modify | `ocean_loading.in.base`**)”
 
 ## End
-In this direction, this 3 file have changed to 6 mintue
+In this folder, the sampling rate has been adjusted to record one data point every 6 minutes (0.1 hours).
+
 
