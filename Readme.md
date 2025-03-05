@@ -2,7 +2,7 @@
 
 This package provides tools for analyzing Tidal Modulation of slow and fast Earthquakes.
 
-<img src="https://raw.githubusercontent.com/Weifan-Lu/TiMEpy/main/Logo.png" alt="TiMEpy Logo" width="200"/>
+<img src="https://raw.githubusercontent.com/Weifan-Lu/TiMEpy/main/Logo.png" alt="TiMEpy Logo" width="400"/>
 
 
 
