@@ -72,28 +72,49 @@ def ana4_b_value(config):
     window_dates = mdates.num2date(window_centers)
     komo_t = config.mainshock_t
 
-    # Create two subplots sharing the x-axis
-    fig, (ax1, ax2) = plt.subplots(2, 1, sharex=None, figsize=(8, 6))
+    fig, ax = plt.subplots(figsize=(12, 4))
 
-    # Subplot 1: Plot b-value variations over time with error bars
-    ax1.errorbar(
+    ax.errorbar(
         window_dates, b_values, yerr=b_std_all, fmt='o',
-        markersize=6, markerfacecolor='royalblue', markeredgecolor='black',  # Enhance marker appearance
-        capsize=4, capthick=1.2, elinewidth=2, alpha=0.8, color='royalblue',  # Enhance error bars
+        markersize=6, markerfacecolor='royalblue', markeredgecolor='black',  # 增强标记外观
+        capsize=4, capthick=1.2, elinewidth=2, alpha=0.8, color='royalblue',  # 增强误差棒
         linestyle='-')
 
-    # Set x-axis to display dates
-    # ax1.xaxis_date()
-    # ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
-    # fig.autofmt_xdate()  # Auto-rotate date labels
-
-    ax1.set_ylabel('b-positive')
-    ax1.axvline(komo_t, color='r', linewidth=2)
-    vis.set_common_elements(ax1, window_centers, 'Time', 'b-positive', 'Time vs. b-positive', font_size=14)
+    ax.set_ylabel('b-positive')
+    ax.axvline(komo_t, color='r', linewidth=2)
+    vis.set_common_elements(ax, window_centers, 'Time', 'b-positive', 'Time vs. b-positive', font_size=14)
 
     plt.tight_layout()
     plt.savefig(config.TM_earthquake_b_positive, format='pdf')
+
     print(f"The B value plotted and saved to {config.TM_earthquake_b_positive}")
     print('====== Analysis | B value measurement : End ======')
 
     # plt.show()
+
+
+    # # Create two subplots sharing the x-axis
+    # fig, (ax1, ax2) = plt.subplots(2, 1, sharex=None, figsize=(8, 6))
+    #
+    # # Subplot 1: Plot b-value variations over time with error bars
+    # ax1.errorbar(
+    #     window_dates, b_values, yerr=b_std_all, fmt='o',
+    #     markersize=6, markerfacecolor='royalblue', markeredgecolor='black',  # Enhance marker appearance
+    #     capsize=4, capthick=1.2, elinewidth=2, alpha=0.8, color='royalblue',  # Enhance error bars
+    #     linestyle='-')
+    #
+    # # Set x-axis to display dates
+    # # ax1.xaxis_date()
+    # # ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
+    # # fig.autofmt_xdate()  # Auto-rotate date labels
+    #
+    # ax1.set_ylabel('b-positive')
+    # ax1.axvline(komo_t, color='r', linewidth=2)
+    # vis.set_common_elements(ax1, window_centers, 'Time', 'b-positive', 'Time vs. b-positive', font_size=14)
+    #
+    # plt.tight_layout()
+    # plt.savefig(config.TM_earthquake_b_positive, format='pdf')
+    # print(f"The B value plotted and saved to {config.TM_earthquake_b_positive}")
+    # print('====== Analysis | B value measurement : End ======')
+    #
+    # # plt.show()
