@@ -27,7 +27,7 @@ c-- read parameter data
 c--
 	sumtime=0.0
 !	tinterval=15.0  ! [minutes]
-	tinterval=60.0
+	tinterval=6.0
 !	do i=1,97  ! 1day
 !	do i=1,193  ! 2days
 !	do i=1,289  ! 3days
