@@ -9,7 +9,6 @@ import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 import matplotlib.ticker as mticker
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
-from obspy.imaging.beachball import beach
 
 # Helper Function: Calculate the Position of the Count Text in the Plot
 def calc_text_position(lon_vals, lat_vals):
