@@ -52,3 +52,7 @@ Follow these steps to get started quickly:
    - **b-value computation:**
       ```bash  
          python ex_ana4_b_value.py
+
+## Additional Tutorial
+
+For a comprehensive, step-by-step tutorial on using TiMEpy, refer to the Simple_tutorial.ipynb file—a detailed guide developed using Jupyter Notebook
