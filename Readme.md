@@ -55,7 +55,7 @@ Follow these steps to get started quickly:
 
 ## Additional Tutorial
 
-For a comprehensive, step-by-step tutorial on using TiMEpy, refer to the Simple_tutorial.ipynb  file—a detailed guide developed using Jupyter Notebook
+For a comprehensive, step-by-step tutorial on using TiMEpy, refer to the [Simple_tutorial.ipynb](https://github.com/Weifan-Lu/TiMEpy/blob/main/Simple_tutorial.ipynb)  file—a detailed guide developed using Jupyter Notebook
 
 
 ## Contact
