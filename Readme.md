@@ -21,6 +21,11 @@ Follow these steps to get started quickly:
     python main_run.py
 
 3. **Run each step separately:**
+   ### Preprocessing
+   - **Create output:**  
+     ```bash
+        python ex_pre0_create_output.py
+     
    ```bash
     python ex_pre0_create_output.py
     python ex_pre1_select_catalog.py
