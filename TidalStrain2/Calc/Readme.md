@@ -1,9 +1,11 @@
 ## Adjusting the Sampling Rate in TidalStrain.2
 
+The TidalStrain.2 project allows you to customize the sampling rate for tidal strain calculations by modifying parameters across several key files. This section guides you through the process step-by-step, ensuring consistency and accuracy in your adjustments.
+
 TidalStrain.2.sh: The main script file, where the nevent parameter needs to be modified.
 event.in: The input file containing event data, with the number of rows corresponding to the nevent value.
 
-有三个文件需要特别注意，如果你想更改采样率的话。
+## Overview of Relevant Files
 1. earthtide.input5.base
 NN: Number of calculations. For example, if you would like to set the sampling interval at 3 minutes for 2 days, you should set 961 (= 60*24*2 / 3 +1). If 6 minutes for 1 day, 241 (= 60*24 / 6 +1). If 15 minutes for 3660 days (about 10 years), 351361 (= 60*24*3660 / 15 +1).
 ST: Step or interval of calculations in hours. Note that we recommend 0.05 (= 3 minutes) as minimum because the unit of the sampling interval of ocean tide loading effects combined later is integer minutes.
