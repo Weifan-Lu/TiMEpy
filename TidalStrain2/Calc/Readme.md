@@ -17,7 +17,7 @@ To change the sampling rate, you’ll need to update the following files:
 
 Follow these steps to adjust the sampling rate to your desired interval:
 
-1. **Modify | earthtide.input5.base**
+1. **Modify | `earthtide.input5.base`**
 
 ```base
     JA,JB,JC,JD,JE :initial Year,Month,Day,Hour,Minute
@@ -29,7 +29,7 @@ Follow these steps to adjust the sampling rate to your desired interval:
 NN: Number of calculations. For example, if you would like to set the sampling interval at 3 minutes for 2 days, you should set 961 (= 60*24*2 / 3 +1). If 6 minutes for 1 day, 241 (= 60*24 / 6 +1). If 15 minutes for 3660 days (about 10 years), 351361 (= 60*24*3660 / 15 +1).
 ST: Step or interval of calculations in hours. Note that we recommend 0.05 (= 3 minutes) as minimum because the unit of the sampling interval of ocean tide loading effects combined later is integer minutes.
 
-2. **Modify | ocean_loading.in.base**
+2. **Modify | `ocean_loading.in.base`**
 
 ```base
     *********************[ Mandatory Cards ]**********************
@@ -51,7 +51,7 @@ ST: Step or interval of calculations in hours. Note that we recommend 0.05 (= 3 
 If you would like to set the sampling interval to 15 minutes, you should change 3 in “PREDICT 1,starttime,endtime,3” to 15.
 
 
-3. **Modify | sum_both_list.f**
+3. **Modify | `sum_both_list.f`**
 
 If you would like to change the sampling interval and duration, you can change red values of “tinterval=3.0” and “do i=1,961” in sum_both_list.f.
 
@@ -67,5 +67,5 @@ tinterval=1.0, do i=1,40321.
 
 Of course, you must change the following red values properly.
 
-- Solid tide: NN and ST (961,0.05) in “earthtide.input5.base (see 1. **Modify | earthtide.input5.base**)”
-- Ocean tide: PREDICT 1,starttime,endtime,3 in “ocean_loading.in.base (see 2. **Modify | ocean_loading.in.base**)”
+- Solid tide: NN and ST (961,0.05) in “earthtide.input5.base (see 1. **Modify | `earthtide.input5.base`**)”
+- Ocean tide: PREDICT 1,starttime,endtime,3 in “ocean_loading.in.base (see 2. **Modify | `ocean_loading.in.base`**)”
