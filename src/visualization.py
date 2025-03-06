@@ -85,43 +85,6 @@ def set_common_elements(ax, time_series, x_label, y_label, title_text, font_size
     ax.tick_params(axis='both', labelsize=font_size)
     return ax
 
-#
-# def plot_phase_modulation_matlab(ph1, Prob_o, Po, G, p, wbin, PM_ra, ph_shift):
-#     """
-#     This function generates three subplots based on the given data.
-#     """
-#     n_front = 16
-#     bar_color = [0.8, 0.8, 0.8]
-#     bar_edge_color = 'k'
-#     fig, axs = plt.subplots(1, 3, figsize=(24,6))
-#
-#     # First subplot: Observed distribution
-#     axs[0].bar(ph1, Prob_o, width=wbin, color=bar_color, edgecolor=bar_edge_color)
-#     axs[0].set_xlabel(r'Phase ($^\circ$)', fontsize=n_front)
-#     axs[0].set_ylabel('Probability Density', fontsize=n_front)
-#     axs[0].set_title('P_obs (Observed distribution)', fontsize=n_front)
-#     axs[0].tick_params(axis='both', labelsize=n_front)
-#
-#     # Second subplot: Reference distribution
-#     axs[1].bar(ph1, Po, width=wbin, color=bar_color, edgecolor=bar_edge_color)
-#     axs[1].set_xlabel(r'Phase ($^\circ$)', fontsize=n_front)
-#     axs[1].set_ylabel('Probability Density', fontsize=n_front)
-#     axs[1].set_title('P_ref (Uniform distribution)', fontsize=n_front)
-#     axs[1].tick_params(axis='both', labelsize=n_front)
-#
-#     # Third subplot: Normalized ratio and fitted curve
-#     axs[2].bar(ph1, Prob_o / Po, width=wbin, color=bar_color, edgecolor=bar_edge_color)
-#     axs[2].plot(ph1, np.ones_like(ph1), 'k--', linewidth=2)  # Reference line y=1
-#     axs[2].plot(ph1, (G @ p + 1), 'r-', linewidth=2)
-#     axs[2].set_xlabel(r'Phase ($^\circ$)', fontsize=n_front)
-#     axs[2].set_ylabel('$P_{obs}/P_{ref}$', fontsize=n_front)
-#     axs[2].set_title(f'Phase amplitude: {PM_ra:.2f}, Phase shift: {ph_shift:.1f}°', fontsize=n_front)
-#     axs[2].set_xlim([-180, 180])
-#     ticks = np.arange(-180, 181, 45)
-#     axs[2].set_xticks(ticks)
-#     axs[2].set_xticklabels(ticks, fontsize=n_front)
-#     axs[2].tick_params(axis='both', labelsize=n_front)
-
 def plot_phase_modulation(ph1, Prob_o, Po, wbin, PM_ra, ph_shift, model, phi_dense):
     """
     This function generates three subplots based on the given data.
