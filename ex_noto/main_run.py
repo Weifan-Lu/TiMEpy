@@ -33,8 +33,8 @@ def main():
     # pre1_select_catalog(config)
     # pre2_decluster_NNA(config)
     # pre3_strain_to_stress(config)
-    opt = '1'
-    ana1_calc_tidal_phase(config, opt)
+    # opt = '1'
+    # ana1_calc_tidal_phase(config, opt)
     ana2_entire_region(config)
     ana3_temp_variation(config)
     # ana4_b_value(config)
