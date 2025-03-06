@@ -13,7 +13,7 @@ from config import Config
 class ExtendedConfig(Config):
     def __init__(self):
 
-        BASE_PATH = '/Users/luwf/PycharmProjects/UTokyoEPS/work_file/Tidal_Triggering/TME_package/Python_version/ex_noto/'
+        BASE_PATH = '../ex_noto/'
         Study_region = 'Noto_'
         super().__init__(BASE_PATH,Study_region)
 
