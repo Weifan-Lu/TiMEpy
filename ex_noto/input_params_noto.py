@@ -17,7 +17,7 @@ class ExtendedConfig(Config):
         Study_region = 'Noto_'
         super().__init__(BASE_PATH,Study_region)
 
-        self.data_original = '/Users/luwf/PycharmProjects/UTokyoEPS/work_file/Tidal_Triggering/TME_package/catalog/JMA_catalog_97_24_UTC_d40.txt'
+        self.data_original = 'input/JMA_noto_eq.txt'
         self.input_stain = 'input/solid-ocean.out'
 
         self.mainshock_t = datetime(2023,12,31,0,0,0)
