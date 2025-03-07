@@ -17,7 +17,7 @@ class ExtendedConfig(Config):
         Study_region = 'Noto_'
         super().__init__(BASE_PATH,Study_region)
 
-        self.data_original = 'input/JMA_noto_earthquake_catalog.txt'
+        self.data_original = '/Users/luwf/PycharmProjects/UTokyoEPS/work_file/Tidal_Triggering/TME_package/catalog/JMA_catalog_97_24_UTC_d40.txt'
         self.input_stain = 'input/solid-ocean.out'
 
         self.mainshock_t = datetime(2023,12,31,0,0,0)
@@ -44,6 +44,7 @@ class ExtendedConfig(Config):
 
         self.depth_cut = 20
         self.angle_deg = 0
+        self.mag_cut = None
 
 
         #%% 去相关参数
@@ -54,14 +55,13 @@ class ExtendedConfig(Config):
         self.eta0 = -4.5
 
         # 相位分箱: -180 到 180，步长 10
-        self.bin_phase = list(range(-180, 181, 20))
+        self.bin_phase = list(range(-180, 180,20))
 
         #%% 潮汐和应力参数
-        self.t_stress_start = '2002-01-01'
+        self.t_stress_start = '2002-06-01'
         self.t_sample = 360
         self.miu = 0.6
         self.t_search = 3
-        self.ref_number = 100000
         self.ref_interval = 1 / 24
 
         #%% 时间评价参数
