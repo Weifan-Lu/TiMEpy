@@ -106,3 +106,73 @@ def filtered_catalog_reg(data, lat_center, lon_center, side_length_x, side_lengt
     return filtered_data, rect_vertices
 
 
+def filtered_catalog(data, lat_center, lon_center, side_length_x, side_length_y, angle_deg,depth_cut=None, mag_cut=None, start_time=None, end_time=None):
+    """
+    Filters earthquake catalog data within a rotated rectangle.
+
+    Parameters:
+        data         : NumPy array with columns
+                       [year, month, day, hour, minute, second, latitude, longitude, depth, magnitude, ...]
+        lat_center   : Center latitude of the study region.
+        lon_center   : Center longitude of the study region.
+        side_length_x: Length of the rectangle in longitude (degrees).
+        side_length_y: Length of the rectangle in latitude (degrees).
+        angle_deg    : Rotation angle in degrees.
+        depth_cut    : Maximum depth (if provided).
+        mag_cut      : Minimum magnitude (if provided).
+        start_time   : Earliest event time (if provided; either a datetime or ISO string).
+        end_time     : Latest event time (if provided; either a datetime or ISO string).
+
+    Returns:
+        filtered_data: Filtered data array.
+        rect_vertices: A 4x2 array with the rectangle's vertices as [latitude, longitude].
+    """
+    # Compute half sizes
+    half_width = side_length_x / 2.0
+    half_height = side_length_y / 2.0
+
+    if angle_deg == 0:
+        lat_env_min = lat_center -  half_height
+        lat_env_max = lat_center +  half_height
+        lon_env_min = lon_center - half_width
+        lon_env_max = lon_center +  half_width
+    else:
+        lat_env_min = lat_center -   half_height*1.5
+        lat_env_max = lat_center +  half_height*1.5
+        lon_env_min = lon_center - half_height*1.5
+        lon_env_max = lon_center + half_height*1.5
+
+
+    # Get columns (Python uses 0-indexing)
+    lat = data[:, 6]
+    lon = data[:, 7]
+    depth = data[:, 8]
+    mag = data[:, 9]
+
+    # Convert date/time columns (columns 0-5) to datetime objects
+    times = np.array([datetime(int(row[0]), int(row[1]), int(row[2]),
+                               int(row[3]), int(row[4]), int(row[5]))
+                      for row in data])
+
+    # Apply spatial envelope filter
+    idx = ((lat >= lat_env_min) & (lat <= lat_env_max) &
+           (lon >= lon_env_min) & (lon <= lon_env_max))
+
+    # If additional filters are provided, apply them here
+    if depth_cut is not None:
+        idx &= (depth <= depth_cut)
+    if mag_cut is not None:
+        idx &= (mag >= mag_cut)
+    if (start_time is not None) and (end_time is not None):
+        # Ensure start_time and end_time are datetime objects
+        if not isinstance(start_time, datetime):
+            start_time = datetime.fromisoformat(start_time)
+        if not isinstance(end_time, datetime):
+            end_time = datetime.fromisoformat(end_time)
+        idx &= ((times >= start_time) & (times <= end_time))
+
+    filtered_data = data[idx, :]
+
+    return filtered_data
+
+

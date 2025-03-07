@@ -17,31 +17,22 @@ class ExtendedConfig(Config):
         super().__init__(BASE_PATH,Study_region)
         # Base path
         self.data_original = 'input/ridgrest_10years.txt'
+        self.input_stain = 'input/solid-ocean.out'
 
         # Mainshock information
         self.mainshock_t = datetime(2019, 7, 4, 0, 0, 0)
-
-        self.str = 321
-        self.dip = 81
-        self.slip = 180
-        self.depth = 12  # km
-        self.main_lat = 35.76950
-        self.main_lon = -117.59933
+        self.str, self.dip, self.slip = 321, 81, 180
+        self.main_lat, self.main_lon, self.depth  = 35.76950, -117.59933, 12
 
         # %% Selection region parameters
-        self.lat_center = 35.72
-        self.lon_center = -117.56
-        self.side_length_x = 0.05
-        self.side_length_y = 0.5
-        self.start_time = datetime(2010, 1, 1, 0, 0, 0)
-        self.end_time = datetime(2019, 7, 3, 0, 0, 0)
+        self.lat_center, self.lon_center = 35.72, -117.56
+        self.side_length_x, self.side_length_y, self.angle_deg = 0.05, 0.5, 135
+        self.start_time, self.end_time = datetime(2010, 1, 1, 0, 0, 0),  datetime(2019, 7, 3, 0, 0, 0)
         self.depth_cut = 30
-        self.angle_deg = 135
+        self.mag_cut = None
 
         # %% Decorrelation parameters
-        self.df = 1.6
-        self.b = 1.05
-        self.p = 0.5
+        self.df, self.b, self.p = 1.6, 1.05, 0.5
         self.q = 1 - self.p
         self.eta0 = -4.5
 
@@ -56,7 +47,5 @@ class ExtendedConfig(Config):
         self.ref_interval = 1 / 24
 
         # %% Temporal evaluation parameters
-        self.window_days = 3.4 * 365
-        self.step_days = 91
-        self.syn_times = 100
+        self.window_days, self.step_days = 3.4 * 365, 91
         self.initial_guess = [2, 0.1]

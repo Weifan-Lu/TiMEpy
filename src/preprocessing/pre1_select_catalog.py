@@ -60,19 +60,15 @@ def pre1_select_catalog(config):
     start_time = config.start_time
     end_time = config.end_time
     depth_cut = config.depth_cut
+    mag_cut = config.mag_cut  # Reset the Magnitude Filtering Parameters
+    if mag_cut == None:
+        mag_cut = -10
 
     # ----- 3. First Step Filtering: Perform Spatial Filtering on the Entire Rectangular Area-----
-    filtered_data_original, _ = msc.filtered_catalog_reg(
-        data_original, lat_center, lon_center, side_length_x*2, side_length_y*2, angle_deg
-    )
+    filtered_data_original = msc.filtered_catalog(data_original, lat_center, lon_center, side_length_x*2, side_length_y*2, angle_deg)
 
     # ----- 5. Third Step Filtering: Further Filter by Depth, Magnitude, and Time-----
-    mag_cut = -10  # Reset the Magnitude Filtering Parameters
-    filtered_data_mc, rect_vertices = msc.filtered_catalog_reg(
-        filtered_data_original, lat_center, lon_center,
-        side_length_x, side_length_y, angle_deg,
-        depth_cut, mag_cut, start_time, end_time
-    )
+    filtered_data_mc, rect_vertices = msc.filtered_catalog_reg(filtered_data_original, lat_center, lon_center,side_length_x, side_length_y, angle_deg,depth_cut, mag_cut, start_time, end_time)
 
     # Convert the Time of Each Filtered Record (First 6 Columns) to a datetime Object
     filtered_event_time = np.array([
@@ -110,7 +106,7 @@ def pre1_select_catalog(config):
     ax = axs[0, 0]
     sc1 = ax.scatter(
         filtered_data_original[:, 7], filtered_data_original[:, 6],
-        s=17, c=filtered_data_original[:, 8], cmap='jet', alpha=0.7
+        s=5, c=filtered_data_original[:, 8], cmap='jet', alpha=0.7
     )
     ax.set_xlabel('Longitude', fontsize=FONT_LABEL)
     ax.set_ylabel('Latitude', fontsize=FONT_LABEL)
@@ -131,7 +127,7 @@ def pre1_select_catalog(config):
                s=10, color='gray', alpha=0.7)
     sc2 = ax.scatter(
         filtered_data_mc[:, 7], filtered_data_mc[:, 6],
-        s=10, c=filtered_data_mc[:, 8], cmap='jet', alpha=0.7
+        s=5, c=filtered_data_mc[:, 8], cmap='jet', alpha=0.7
     )
     ax.set_xlabel('Longitude', fontsize=FONT_LABEL)
     ax.set_ylabel('Latitude', fontsize=FONT_LABEL)
@@ -149,8 +145,7 @@ def pre1_select_catalog(config):
     # --- Subplot 3: Time-Magnitude Scatter Plot ---
 
     ax = axs[1, 0]
-    ax.scatter(filtered_event_time, filtered_data_mc[:, 9],
-               s=30, color='r', alpha=0.7)
+    ax.scatter(filtered_event_time, filtered_data_mc[:, 9],s=20, color='black', alpha=0.7)
     ax.set_xlabel('Time', fontsize=FONT_LABEL)
     ax.set_ylabel('Magnitude', fontsize=FONT_LABEL)
     ax.set_title('Magnitude vs. Time', fontsize=FONT_TITLE)
